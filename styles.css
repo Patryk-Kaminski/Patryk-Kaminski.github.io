@@ -9,6 +9,7 @@ body {
     background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
     color: #fff;
     line-height: 1.6;
+    scroll-behavior: smooth;
 }
 
 /* NAV */
@@ -356,4 +357,3 @@ footer {
             height: 22px;
         }
 }
-
