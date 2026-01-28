@@ -26,6 +26,7 @@ body {
 
     .logo span {
         color: #00e0ff;
+        font-size: 150%;
     }
 
 .nav ul {
@@ -276,5 +277,66 @@ footer {
     .lang-switch {
         margin-top: 10px;
     }
+}
+
+/* =========================
+   SOCIAL MEDIA
+========================= */
+
+.socials {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.social {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+    .social img {
+        width: 26px;
+        height: 26px;
+        filter: brightness(0) invert(1);
+    }
+
+    /* HOVER – OGÓLNY */
+    .social:hover {
+        transform: translateY(-8px) scale(1.1);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+
+    /* KOLORY PLATFORM */
+    .social.github:hover {
+        background: #24292e;
+    }
+
+    .social.linkedin:hover {
+        background: #0077b5;
+    }
+
+    .social.instagram:hover {
+        background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
+    }
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+    .social {
+        width: 48px;
+        height: 48px;
+    }
+
+        .social img {
+            width: 22px;
+            height: 22px;
+        }
 }
 
