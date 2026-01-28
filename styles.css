@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', 'sans-serif';
 }
 
 body {
@@ -303,8 +303,8 @@ footer {
 }
 
     .social img {
-        width: 26px;
-        height: 26px;
+        width: 28px;
+        height: 28px;
         filter: brightness(0) invert(1);
     }
 
