@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Informatyk</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="hero">
+        <nav class="nav">
+            <h1 class="logo">Portfolio<span>.</span></h1>
+            <ul>
+                <li><a href="#about">O mnie</a></li>
+                <li><a href="#skills">Umiejętności</a></li>
+                <li><a href="#projects">Projekty</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+            <div class="lang-switch">
+                <button onclick="setLanguage('pl')">PL</button>
+                <button onclick="setLanguage('en')">EN</button>
+            </div>
+
+        </nav>
+
+        <div class="hero-content">
+            <h2 data-pl="Cześć, jestem Informatykiem"
+                data-en="Hi, I am an IT Specialist">
+                Cześć, jestem <span>Informatykiem</span>
+            </h2>
+
+            <p data-pl="Tworzę nowoczesne strony, aplikacje i rozwiązania IT"
+               data-en="I create modern websites, applications and IT solutions">
+                Tworzę nowoczesne strony, aplikacje i rozwiązania IT
+            </p>
+
+            <a href="#projects" class="btn"
+               data-pl="Zobacz projekty"
+               data-en="View projects">
+                Zobacz projekty
+            </a>
+
+        </div>
+    </header>
+
+    <section id="about" class="section glass">
+        <h2>O mnie</h2>
+        <p>
+            Jestem pasjonatem informatyki, programowania oraz nowoczesnych technologii.
+            Lubię tworzyć estetyczne i funkcjonalne rozwiązania.
+        </p>
+    </section>
+
+    <section id="skills" class="section">
+        <h2>Umiejętności</h2>
+        <div class="skills-grid">
+            <div class="skill">HTML5 / CSS3</div>
+            <div class="skill">JavaScript</div>
+            <div class="skill">Python</div>
+            <div class="skill">SQL</div>
+            <div class="skill">Git / GitHub</div>
+            <div class="skill">UI / UX</div>
+        </div>
+    </section>
+
+    <section id="projects" class="section glass">
+        <h2>Projekty</h2>
+        <div class="projects-grid">
+            <div class="card">
+                <h3>Strona firmowa</h3>
+                <p>Nowoczesna strona z animacjami i responsywnym layoutem.</p>
+            </div>
+            <div class="card">
+                <h3>Aplikacja webowa</h3>
+                <p>System logowania, baza danych i panel użytkownika.</p>
+            </div>
+            <div class="card">
+                <h3>Portfolio</h3>
+                <p>Minimalistyczne portfolio z efektem glassmorphism.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Kontakt</h2>
+        <p>Email: <strong>kontakt@email.pl</strong></p>
+    </section>
+
+    <footer>
+        <p>© 2026 Portfolio Informatyka</p>
+    </footer>
+    <script>
+        function setLanguage(lang) {
+            document.querySelectorAll("[data-pl]").forEach(el => {
+                el.textContent = el.getAttribute(`data-${lang}`);
+            });
+        }
+    </script>
+
+</body>
+</html>
