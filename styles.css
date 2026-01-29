@@ -46,7 +46,7 @@ body {
 .nav ul {
     list-style: none;
     display: flex;
-    gap: 25px;
+    gap: 30px;
 }
 
 .nav a {
@@ -62,10 +62,10 @@ body {
 /* LANGUAGE SWITCH */
 .lang-switch {
     display: flex;
-    gap: 10px;
+    gap: 15px;
 }
 
-    .lang-switch button {
+    .lang-switch a {
         background: rgba(255,255,255,0.15);
         border: none;
         color: #fff;
@@ -76,7 +76,7 @@ body {
         transition: background 0.3s, transform 0.2s;
     }
 
-        .lang-switch button:hover {
+        .lang-switch a:hover {
             background: #00e0ff;
             color: #000;
             transform: scale(1.05);
@@ -249,8 +249,8 @@ body {
 }
 
 .social {
-    width: 55px;
-    height: 55px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     background: rgba(255,255,255,0.12);
     backdrop-filter: blur(10px);
@@ -259,10 +259,14 @@ body {
     justify-content: center;
     transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
 }
-
+p strong a {
+    text-decoration: none;
+    color: white;
+    font-size: 120%;
+}
     .social img {
-        width: 28px;
-        height: 28px;
+        width: 45px;
+        height: 45px;
         filter: brightness(0) invert(1);
     }
 
@@ -271,6 +275,9 @@ body {
         box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     }
 
+    .social.cv:hover {
+        background: linear-gradient(135deg, #8134af, #dd2a7b, maroon);
+    }
     .social.github:hover {
         background: #24292e;
     }
@@ -291,6 +298,7 @@ footer {
     padding: 20px;
     opacity: 0.7;
 }
+
 
 /* =========================
    ANIMATIONS
