@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | IT Specialist</title>
-    <meta name="author" content="Patryk Kamiñski">
+    <meta name="author" content="Patryk Kamiï¿½ski">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
@@ -120,6 +120,49 @@
     <footer>
         <p>&copy; 2026 Patryk Kaminski</p>
     </footer>
+    <script>
+        //reveal
+        const reveals = document.querySelectorAll(
+            '.section, .skill, .card, .hero-content'
+        );
+
+        reveals.forEach((el, i) => {
+            el.classList.add('reveal');
+            el.classList.add(`delay-${i % 3}`);
+        });
+
+        function revealOnScroll() {
+            const windowHeight = window.innerHeight;
+
+            reveals.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        //window
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero-content');
+            const scrollY = window.scrollY;
+            hero.style.transform = `translateY(${scrollY * 0.15}px)`;
+        });
+        //card
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--y', `${e.clientY - rect.top}px`);
+            });
+        });
+
+
+    </script>
+    </script>
+
 
 </body>
 </html>
