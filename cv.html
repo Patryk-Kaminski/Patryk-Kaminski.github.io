@@ -85,6 +85,18 @@
         }, { threshold: 0.2 });
 
         reveals.forEach(r => revealObserver.observe(r));
+        const pdfObject = document.querySelector('.pdf object');
+
+        const pdfObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting){
+                    entry.target.classList.add('active');
+                    pdfObserver.unobserve(entry.target);
+                 }
+            });
+        }, { threshold: 0.3 });
+
+        pdfObserver.observe(pdfObject);
 
     </script>
 </body>

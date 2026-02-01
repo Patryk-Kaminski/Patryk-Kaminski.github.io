@@ -194,6 +194,16 @@ body::after {
     box-shadow: 0 10px 30px rgba(0,224,255,0.3);
     transition: transform 0.3s, box-shadow 0.3s;
 }
+.pdf object {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease;
+}
+
+.pdf object.active {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 
 
