@@ -112,11 +112,11 @@
                     <img src="icons/github.svg" alt="GitHub">
                 </a>
 
-                <a href="https://linkedin.com" target="_blank" class="social linkedin">
+                <a href="https://www.linkedin.com/in/patryk-kami%C5%84ski-5720733aa/" target="_blank" class="social linkedin">
                     <img src="icons/linkedin.svg" alt="LinkedIn">
                 </a>
 
-                <a href="https://instagram.com" target="_blank" class="social instagram">
+                <a href="https://www.instagram.com/patrykkaminski.777?igsh=NGxpY3drZ25oYmdh" target="_blank" class="social instagram">
                     <img src="icons/instagram.svg" alt="Instagram">
                 </a>
 
@@ -128,47 +128,199 @@
         <p>&copy; 2026 Patryk Kamiński</p>
     </footer>
     <script>
-        //reveal
-            const reveals = document.querySelectorAll(
-                 '.section, .skill, .card, .hero-content'
-    );
+        /* =========================
+         SCROLL REVEAL
+        ========================= */
+        const reveals = document.querySelectorAll('.section, .skill, .card, .hero-content');
 
-    reveals.forEach((el, i) => {
-        el.classList.add('reveal');
-        el.classList.add(`delay-${i % 3}`);
-    });
-
-    function revealOnScroll() {
-        const windowHeight = window.innerHeight;
-
-        reveals.forEach(el => {
-            const elementTop = el.getBoundingClientRect().top;
-            if (elementTop < windowHeight - 100) {
-                el.classList.add('active');
-            }
+        reveals.forEach((el, i) => {
+            el.classList.add('reveal');
+            el.classList.add(`delay-${i % 3}`);
         });
-    }
-    //window
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll();
 
+        function revealOnScroll() {
+            const windowHeight = window.innerHeight;
+        
+            reveals.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+
+        /* =========================
+         PARALLAX HERO
+        ========================= */
         window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero-content');
             const scrollY = window.scrollY;
             hero.style.transform = `translateY(${scrollY * 0.15}px)`;
         });
-        //card
-           document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            card.style.setProperty('--x', `${e.clientX - rect.left}px`);
-            card.style.setProperty('--y', `${e.clientY - rect.top}px`);
-                });
-        });  
+
+
+        /* =========================
+         HOLOGRAM TYPEWRITER
+        ========================= */
+        const textElement = document.querySelector('.hero-content h2 span');
+        const words = ["Informatykiem", "Web designer"];
+        let wordIndex = 0, charIndex = 0, isDeleting = false;
+
+        // Kursor
+        const cursor = document.createElement("span");
+        cursor.textContent = "|";
+        cursor.style.marginLeft = "6px";
+        cursor.style.animation = "blink 1.2s infinite";
+        textElement.after(cursor);
+
+        // CSS animacji kursora i hologram
+        const style = document.createElement("style");
+        style.innerHTML = `
+            @keyframes blink {
+                0%, 45%, 100% { opacity: 1; }
+                50%, 95% { opacity: 0; }
+            }
+
+            .hologram {
+                position: relative;
+                text-shadow:
+                    0 0 8px rgba(0,224,255,0.6),
+                    0 0 18px rgba(0,224,255,0.4);
+                animation: holoFloat 3s ease-in-out infinite,
+                           holoFlicker 2.5s infinite;
+            }
+
+            .hologram::after {
+                content: attr(data-text);
+                position: absolute;
+                left: 0;
+                top: 2px;
+                opacity: 0.35;
+                filter: blur(1px);
+                color: #00e0ff;
+            }
+
+            @keyframes holoFloat {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-2px); }
+            }
+
+            @keyframes holoFlicker {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.85; }
+                70% { opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+        textElement.classList.add("hologram");
+
+        function typeEffect() {
+            const currentWord = words[wordIndex];
         
+            if (!isDeleting) charIndex += 0.5;
+            else charIndex -= 0.5;
+        
+            const visibleText = currentWord.substring(0, Math.floor(charIndex));
+            textElement.textContent = visibleText;
+            textElement.setAttribute("data-text", visibleText);
+        
+            let speed = isDeleting ? 45 : 65;
+        
+            if (!isDeleting && Math.floor(charIndex) === currentWord.length) {
+                speed = 1500;
+                isDeleting = true;
+            }
+        
+            if (isDeleting && Math.floor(charIndex) === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                speed = 500;
+            }
+        
+            setTimeout(typeEffect, speed);
+        }
 
-    </script>
+        typeEffect();
 
 
+        /* =========================
+         CARDS 3D TILT + GLASS LIGHT
+        ========================= */
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+            
+                const rotateX = ((y / rect.height) - 0.5) * -10;
+                const rotateY = ((x / rect.width) - 0.5) * 10;
+            
+                card.style.transform = `
+                    perspective(800px)
+                    rotateX(${rotateX}deg)
+                    rotateY(${rotateY}deg)
+                `;
+            
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+            });
+        
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(800px) rotateX(0) rotateY(0)';
+            });
+        });
+
+
+        /* =========================
+            PŁYNNE ŚWIATŁO ZA KURSOREM
+        ========================= */
+        const light = document.createElement('div');
+        light.style.position = 'fixed';
+        light.style.width = '320px';
+        light.style.height = '320px';
+        light.style.background = 'radial-gradient(circle, rgba(0,224,255,0.18), transparent 70%)';
+        light.style.pointerEvents = 'none';
+        light.style.borderRadius = '50%';
+        light.style.zIndex = '0';
+        light.style.filter = 'blur(10px)';
+        document.body.appendChild(light);
+
+        let mouseX = 0, mouseY = 0;
+        let currentX = 0, currentY = 0;
+
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateLight() {
+            currentX += (mouseX - currentX) * 0.08;
+            currentY += (mouseY - currentY) * 0.08;
+            light.style.transform = `translate(${currentX - 160}px, ${currentY - 160}px)`;
+            requestAnimationFrame(animateLight);
+        }
+
+        animateLight();
+
+
+        /* =========================
+           SCANLINE / HOLOGRAM NAGŁÓWKI
+        ========================= */
+        const headers = document.querySelectorAll('.section h2');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('scan');
+                }
+            });
+        }, { threshold: 0.6 });
+
+        headers.forEach(h => observer.observe(h));
+</script>
 </body>
 </html>
