@@ -19,6 +19,7 @@
             <ul>
                 <li><a href="#about">O mnie</a></li>
                 <li><a href="#skills">Umiejętności</a></li>
+                <li><a href="#certificates">Certyfikaty</a></li>
                 <li><a href="#projects">Projekty</a></li>
                 <li><a href="#contact">Kontakt</a></li>
             </ul>
@@ -64,25 +65,33 @@
             <div class="skill">Networking</div>
         </div>
     </section>
-    <section id="projects" class="section glass">
-        <h2>Osiągnięcia</h2>
+    <section id="certificates" class="section glass">
+        <h2>Certyfikaty</h2>
         <div class="accomplishment-grid">
             <div class="card">
                 <h3>Tytuł Techinik Informatyk</h3>
-                <p>INF.02 INF.03</p>
+                <p>Specjalista konfiguracji sprzętu, administracji systemów i sieci, serwisant komputerowy oraz tworzenie stron internetowych i baz danych.</p>
             </div>
             <div class="card">
                 <h3>Spawanie Światłowodów</h3>
-                <p>Ukończenie kursu spawania światłowodów na poziomie Europejskim</p>
+                <p>Certyfikat spawania światłowodów, w zakresie łączenia włókien szklanych, budowy sieci światłowodowych oraz obsługi spawarek światłowodowych</p>
             </div>
             <div class="card">
-                <h3>Programowanie</h3>
-                <p>Posiadam x Certyfikatów Prograowania na poziomie Zawansowanym Europejskim</p>
+                <h3>Programowanie CS M1 (JAVA)</h3>
+                <p>Programowanie w języku JAVA. Usługa certyfikowana egzaminem ECCC z programowania na poziomie zawansowanym. Ukończona na poziomie 100%</p>
+            </div>
+            <div class="card">
+                <h3>Web Developer</h3>
+                <p>Certyfikat tworzeniu stron i aplikacji internetowych</p>
+            </div>
+            <div class="card">
+                <h3>Cisco Wprowadzenie do Cyberbezpieczeństwa</h3>
+                <p>Europejski Ceryfikat z podstaw Cyberbezpieczeństwa</p>
             </div>
         </div>
     </section>
 
-    <section id="projects1" class="section glass">
+    <section id="projects" class="section glass">
         <h2>Projekty</h2>
         <div class="projects-grid">
             <div class="card">
@@ -156,7 +165,7 @@
 
 
         /* =========================
-         PARALLAX HERO
+         PARALLAX 
         ========================= */
         window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero-content');
@@ -172,14 +181,14 @@
         const words = ["Informatykiem", "Web designer"];
         let wordIndex = 0, charIndex = 0, isDeleting = false;
 
-        // Kursor
+      
         const cursor = document.createElement("span");
         cursor.textContent = "|";
         cursor.style.marginLeft = "6px";
         cursor.style.animation = "blink 1.2s infinite";
         textElement.after(cursor);
 
-        // CSS animacji kursora i hologram
+        
         const style = document.createElement("style");
         style.innerHTML = `
             @keyframes blink {
@@ -250,7 +259,7 @@
 
 
         /* =========================
-         CARDS 3D TILT + GLASS LIGHT
+         CARDS 
         ========================= */
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('mousemove', e => {
@@ -332,7 +341,7 @@ magneticButtons.forEach(btn => {
         const x = e.clientX - position.left - position.width / 2;
         const y = e.clientY - position.top - position.height / 2;
 
-        // Przesuń przycisk w stronę kursora (siła 0.3)
+        
         btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
     });
 
