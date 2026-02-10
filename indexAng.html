@@ -10,6 +10,9 @@
     <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
 </head>
 <body>
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
 
     <header class="hero">
         <nav class="nav">
@@ -302,8 +305,7 @@
 
         animateLight();
 
-
-        /* =========================
+ /* =========================
            SCANLINE / HOLOGRAM NAGŁÓWKI
         ========================= */
         const headers = document.querySelectorAll('.section h2');
@@ -317,6 +319,35 @@
         }, { threshold: 0.6 });
 
         headers.forEach(h => observer.observe(h));
+
+        const magneticButtons = document.querySelectorAll('.btn, .social');
+
+magneticButtons.forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+        const position = btn.getBoundingClientRect();
+        const x = e.clientX - position.left - position.width / 2;
+        const y = e.clientY - position.top - position.height / 2;
+
+        // Przesuń przycisk w stronę kursora (siła 0.3)
+        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+        // Wróć na miejsce po zabraniu myszki
+        btn.style.transform = 'translate(0px, 0px)';
+        // Resetuj transformacje z innych efektów (np. hover scale) po chwili
+        setTimeout(() => { btn.style.transform = ''; }, 300); 
+    });
+});
+window.addEventListener("load", () => {
+    const loader = document.querySelector(".loader-wrapper");
+    loader.classList.add("loader-hidden");
+    
+    // Usuń element z DOM po zakończeniu animacji, żeby nie blokował kliknięć
+    loader.addEventListener("transitionend", () => {
+        loader.remove();
+    });
+});
 </script>
 
 
