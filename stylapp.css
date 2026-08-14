@@ -1,0 +1,1515 @@
+/* =========================
+   RESET & BASE STYLES
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+/* ============================================================
+   FULLSCREEN ADAPTATION FOR #adminDashboard (.admin-app-container)
+   Dopasowane dokładnie do Twoich klas w app.html
+============================================================ */
+
+/* 1. Reset widoku i zamrożenie paska przewijania przeglądarki */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+}
+
+/* 2. Główny Kontener Aplikacji - Pełny Ekran bez marginesów */
+.admin-app-container,
+#adminDashboard {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: row !important;
+    overflow: hidden !important;
+    z-index: 99999;
+    box-sizing: border-box !important;
+}
+
+/* Zachowanie obsługi ukrywania (jeśli klasa .hidden ukrywa panel) */
+.admin-app-container.hidden,
+#adminDashboard.hidden {
+    display: none !important;
+}
+
+/* 3. LEWY PANEL NAWIGACJI (SIDEBAR) - Przypięty do lewej krawędzi */
+.admin-app-container > .sidebar {
+    height: 100% !important;
+    max-height: 100vh !important;
+    flex-shrink: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+    z-index: 10;
+}
+
+/* Stylowanie paska przewijania w sidebarze (jeśli menu jest długie) */
+.admin-app-container > .sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+.admin-app-container > .sidebar::-webkit-scrollbar-thumb {
+    background: rgba(0, 224, 255, 0.2);
+    border-radius: 4px;
+}
+
+/* 4. PRAWY PANEL ŚRODKOWY (MAIN CONTENT AREA) - Wypełnia resztę ekranu */
+.admin-app-container > .main-wrapper {
+    flex: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+    scroll-behavior: smooth;
+    position: relative !important;
+}
+.tab-panel{
+    margin: 5vh;
+}
+/* 5. Customowy Neonowy Scrollbar dla głównej treści (.main-wrapper) */
+.admin-app-container > .main-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+.admin-app-container > .main-wrapper::-webkit-scrollbar-track {
+    background: rgba(10, 15, 30, 0.6);
+}
+.admin-app-container > .main-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(0, 224, 255, 0.3);
+    border-radius: 10px;
+}
+.admin-app-container > .main-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #00e0ff;
+    box-shadow: 0 0 12px #00e0ff;
+}
+/* =========================
+   BODY + BACKGROUND
+========================= */
+body {
+    background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    color: #fff;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    background-size: 400% 400%;
+    animation: gradientFlow 25s ease infinite;
+}
+
+/* Efekt światła za kursorem */
+body::before {
+    content: '';
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(0, 224, 255, 0.15), transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: 0.05s;
+    z-index: 0;
+}
+
+/* Aurora overlay */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(0, 224, 255, 0.12), transparent 35%),
+        radial-gradient(circle at 80% 60%, rgba(255, 0, 150, 0.08), transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(0, 180, 255, 0.10), transparent 45%);
+    animation: auroraMove 30s ease-in-out infinite alternate;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes ambientBG {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes gradientFlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes auroraMove {
+    0% {
+        background-position: 0% 0%, 100% 100%, 50% 50%;
+    }
+    100% {
+        background-position: 100% 50%, 0% 50%, 50% 100%;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================
+   HEADER & TOOLTIP
+========================= */
+.header-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.demo-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    background: rgba(0, 224, 255, 0.15);
+    border: 1px solid rgba(0, 224, 255, 0.4);
+    color: #00e0ff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border-radius: 20px;
+}
+/* ============================================================
+   DEMO BADGE + HOVER TOOLTIP (EFEKT JAK W INFO-BTN)
+============================================================ */
+
+/* 1. Kontener nadrzędny */
+.demo-badge-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* 2. Styl Plakietki DEMO PORTAL */
+.demo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(0, 224, 255, 0.08);
+    border: 1px solid rgba(0, 224, 255, 0.3);
+    border-radius: 20px;
+    color: #00e0ff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Kropka pulsacyjna przy badge'u */
+.demo-badge .badge-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #00e0ff;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00e0ff;
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.8); }
+}
+
+/* 3. Efekt najedchania (Hover) – identyczny z info-btn */
+.demo-badge-wrapper:hover .demo-badge {
+    background: rgba(0, 224, 255, 0.25);
+    border-color: #00e0ff;
+    box-shadow: 0 0 15px rgba(0, 224, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+/* 4. Stylowanie Chmurki / Tooltipa */
+.demo-tooltip {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(6px) scale(0.95);
+    width: 250px;
+    padding: 12px 14px;
+    background: rgba(13, 18, 30, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 224, 255, 0.35);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+                0 0 15px rgba(0, 224, 255, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 9999;
+}
+
+/* Strzałka wskazująca na badge */
+.demo-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 10px;
+    height: 10px;
+    background: rgba(13, 18, 30, 0.95);
+    border-left: 1px solid rgba(0, 224, 255, 0.35);
+    border-top: 1px solid rgba(0, 224, 255, 0.35);
+}
+
+/* Animacja pokazywania po najechaniu */
+.demo-badge-wrapper:hover .demo-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* Nagłówek wewnątrz tooltipa */
+.demo-tooltip .tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #00e0ff;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+/* Treść opisowa */
+.demo-tooltip .tooltip-body {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 11px;
+    line-height: 1.45;
+    font-weight: 400;
+}
+.info-tooltip-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+.info-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: rgba(0, 224, 255, 0.1);
+    border: 1px solid rgba(0, 224, 255, 0.3);
+    border-radius: 50%;
+    color: #00e0ff;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    outline: none;
+}
+
+.info-btn:hover {
+    background: rgba(0, 224, 255, 0.25);
+    border-color: #00e0ff;
+    box-shadow: 0 0 12px rgba(0, 224, 255, 0.5);
+    transform: scale(1.08);
+}
+
+/* Zapobiega obcinaniu zewnętrznych krawędzi ikony */
+.info-btn svg {
+    display: block;
+    overflow: visible;
+}
+
+.tooltip-content {
+    position: absolute;
+    top: 38px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    width: 290px;
+    background: rgba(10, 15, 30, 0.95);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 224, 255, 0.5);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 224, 255, 0.25);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 100;
+    text-align: left;
+}
+
+.info-tooltip-wrapper:hover .tooltip-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.tooltip-content strong {
+    display: block;
+    color: #00e0ff;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.tooltip-content p {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin-bottom: 12px !important;
+    line-height: 1.4;
+}
+
+.creds-box {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px dashed rgba(0, 224, 255, 0.4);
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    color: #fff;
+}
+
+.creds-box code {
+    background: rgba(0, 224, 255, 0.2);
+    color: #00e0ff;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-weight: 700;
+}
+
+/* =========================
+   LOGIN FORM & ELEMENTS
+========================= */
+.login-header h2 {
+    font-size: 30px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+}
+
+.login-header h2 span {
+    color: #00e0ff;
+}
+
+.login-header p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 30px;
+}
+
+.login-form {
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 10px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 14px 45px 14px 18px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+    color: #fff;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-wrapper input:focus {
+    border-color: #00e0ff;
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 20px rgba(0, 224, 255, 0.35);
+}
+
+.input-icon,
+.toggle-password-btn {
+    position: absolute;
+    right: 16px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+}
+
+.toggle-password-btn:hover,
+.toggle-password-btn.active {
+    color: #00e0ff;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    margin-bottom: 28px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.remember-me input {
+    accent-color: #00e0ff;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+.forgot-password {
+    color: #00e0ff;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.forgot-password:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.login-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    margin-top: 5px;
+    font-size: 16px;
+    border-radius: 14px;
+    position: relative;
+    cursor: pointer;
+}
+
+.btn-loader {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    position: absolute;
+}
+
+.login-btn.loading span {
+    opacity: 0;
+}
+
+.login-btn.loading .btn-loader {
+    display: block;
+}
+
+.login-footer {
+    margin-top: 30px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+/* =========================
+   SYSTEM POWIADOMIEŃ (TOAST)
+========================= */
+.toast-container {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.toast {
+    pointer-events: auto;
+    position: relative;
+    min-width: 300px;
+    max-width: 380px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    animation: toastSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast.hide {
+    animation: toastSlideOut 0.4s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes toastSlideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(120px) scale(0.85);
+    }
+}
+
+.toast-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+}
+
+.toast-content {
+    flex: 1;
+}
+
+.toast-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 3px;
+}
+
+.toast-message {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.4;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.toast-close:hover {
+    color: #fff;
+}
+
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    animation: toastProgress 4.5s linear forwards;
+}
+
+@keyframes toastProgress {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+/* Warianty powiadomień */
+.toast-success {
+    border-left: 4px solid #00e0ff;
+}
+.toast-success .toast-icon { color: #00e0ff; }
+.toast-success .toast-progress { background: #00e0ff; box-shadow: 0 0 10px #00e0ff; }
+
+.toast-error {
+    border-left: 4px solid #ff4d6d;
+}
+.toast-error .toast-icon { color: #ff4d6d; }
+.toast-error .toast-progress { background: #ff4d6d; box-shadow: 0 0 10px #ff4d6d; }
+
+.toast-info {
+    border-left: 4px solid #ffb703;
+}
+.toast-info .toast-icon { color: #ffb703; }
+.toast-info .toast-progress { background: #ffb703; box-shadow: 0 0 10px #ffb703; }
+
+/* =========================
+   RESPONSYWNOŚĆ (MEDIA QUERIES)
+========================= */
+@media (max-width: 540px) {
+    .float-card {
+        padding: 35px 25px;
+    }
+    .back-to-home-btn {
+        top: 20px;
+        left: 20px;
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .toast-container {
+        top: 15px;
+        right: 15px;
+        left: 15px;
+    }
+    .toast {
+        min-width: auto;
+        width: 100%;
+    }
+}
+
+        /* ==========================================================================
+           1. ANIMACJE I KLASY POMOCNICZE
+           ========================================================================== */
+        .fade-out {
+            opacity: 0 !important;
+            transform: scale(0.97) !important;
+            transition: opacity 0.35s ease, transform 0.35s ease !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden { display: none !important; }
+
+        /* ==========================================================================
+           2. UKŁAD PANELU ADMINISTRATORA (SIDEBAR + MAIN CONTENT)
+           ========================================================================== */
+        .admin-app-container {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+            background: #0b0f19;
+            color: #f1f5f9;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Boczny Panel (Sidebar) */
+        .sidebar {
+            width: 260px;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24px 16px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 12px 24px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .brand-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-title span { color: #a855f7; }
+
+        /* Nawigacja w Sidebarze */
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+
+        .nav-item svg {
+            stroke: #94a3b8;
+            transition: stroke 0.25s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #f8fafc;
+        }
+
+        .nav-item:hover svg { stroke: #f8fafc; }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.2));
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .nav-item.active svg { stroke: #818cf8; }
+
+        /* Stopka Sidebara (Profil + Logout) */
+        .sidebar-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #06b6d4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .user-details .name { font-size: 0.85rem; font-weight: 600; line-height: 1.2; }
+        .user-details .role { font-size: 0.72rem; color: #64748b; }
+
+        .btn-icon-logout {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-icon-logout:hover {
+            background: rgba(239, 68, 68, 0.3);
+            color: #fff;
+        }
+
+        /* Main Content Area */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05), transparent 40%);
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 32px;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .page-title h1 { font-size: 1.4rem; font-weight: 700; margin: 0; }
+        .page-title p { font-size: 0.82rem; color: #64748b; margin: 2px 0 0 0; }
+
+        .header-actions { display: flex; align-items: center; gap: 12px; }
+
+        .content-area {
+            padding: 32px;
+            flex: 1;
+        }
+
+        /* ==========================================================================
+           3. STYLIZACJA ZAKŁADEK I ELEMENTÓW PANELU ŚRODKOWEGO
+           ========================================================================== */
+        .card-panel {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(12px);
+            margin-bottom: 24px;
+        }
+
+        /* Strona Główna - Statystyki */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 20px;
+            border-radius: 14px;
+        }
+
+        .kpi-card .label { font-size: 0.78rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+        .kpi-card .val { font-size: 1.7rem; font-weight: 700; margin: 8px 0 4px 0; color: #fff; }
+        .kpi-card .trend { font-size: 0.75rem; color: #10b981; display: flex; align-items: center; gap: 4px; }
+
+        /* Tabele (Użytkownicy, Produkty) */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.88rem;
+        }
+
+        .data-table th {
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.8);
+            color: #94a3b8;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .data-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+        /* Badge statusów */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-success { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-warning { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-info { background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); }
+
+        /* Przycisk akcji w tabeli */
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.78rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-sm:hover { background: rgba(255, 255, 255, 0.15); }
+
+        /* Formularze (Ustawienia) */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .field-group { display: flex; flex-direction: column; gap: 8px; }
+        .field-group label { font-size: 0.85rem; color: #cbd5e1; font-weight: 500; }
+        .field-input {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.88rem;
+        }
+
+        .field-input:focus { outline: none; border-color: #6366f1; }
+
+        /* Drzewo struktury (Struktura) */
+        .tree-list { list-style: none; padding-left: 0; }
+        .tree-item {
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tree-item.sub { margin-left: 24px; border-left: 3px solid #6366f1; }
+
+        /* Responsywność */
+        @media (max-width: 900px) {
+            .admin-app-container { flex-direction: column; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+            .content-area { padding: 16px; }
+        }
+  
+
+        /* Styling animacji KPI */
+.kpi-card .val, 
+.kpi-card .trend {
+    transition: color 0.4s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+/* Błysk przy wzroście wartości (Zielony) */
+.flash-up {
+    color: #34d399 !important;
+    transform: scale(1.08);
+}
+
+/* Błysk przy spadku wartości (Czerwony) */
+.flash-down {
+    color: #f87171 !important;
+    transform: scale(0.93);
+}
+
+/* Kolory dla trendów */
+.trend-up {
+    color: #34d399 !important;
+}
+
+.trend-down {
+    color: #f87171 !important;
+}
+/* =========================
+   STRUKTURA PLIKÓW & ANIMACJE
+========================= */
+
+.structure-card {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 224, 255, 0.2);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.structure-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.structure-header h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.structure-header h3 i {
+    color: #00e0ff;
+}
+
+.tree-count-badge {
+    background: rgba(0, 224, 255, 0.12);
+    border: 1px solid rgba(0, 224, 255, 0.3);
+    color: #00e0ff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Lista plików */
+.tree-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Wiersz pliku */
+.tree-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    /* Domyślnie ukryte pod animację kaskadową */
+    opacity: 0;
+    transform: translateX(-25px);
+}
+
+/* Animacja kaskadowego wchodzenia (Staggered Entrance) */
+.tab-panel:not(.hidden) .tree-item {
+    animation: treeItemSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(var(--i) * 0.05s);
+}
+
+@keyframes treeItemSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-25px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+/* Efekty najechania na plik */
+.tree-item:hover {
+    background: rgba(0, 224, 255, 0.08);
+    border-color: rgba(0, 224, 255, 0.4);
+    transform: translateX(6px) scale(1.01) !important;
+    box-shadow: 0 5px 20px rgba(0, 224, 255, 0.15);
+}
+
+.tree-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.file-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #e2e8f0;
+}
+
+.file-path code {
+    background: rgba(0, 0, 0, 0.4);
+    color: rgba(255, 255, 255, 0.5);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: monospace;
+}
+
+/* Kolorowanie ikonek wg typu jak w VS Code */
+.tree-icon {
+    font-size: 18px;
+    width: 22px;
+    text-align: center;
+}
+
+.folder-icon { color: #f59e0b; } /* Żółty katalog */
+.html-icon   { color: #ea580c; } /* Pomarańczowy HTML */
+.css-icon    { color: #38bdf8; } /* Błękitny CSS */
+.pdf-icon    { color: #ef4444; } /* Czerwony PDF */
+.info-icon   { color: #60a5fa; } /* Niebieski TXT / Info */
+
+/* Etykiety statusów (Badges) */
+.badge {
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.badge-folder  { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+.badge-primary { background: rgba(0, 224, 255, 0.15); color: #00e0ff; border: 1px solid rgba(0, 224, 255, 0.3); }
+.badge-warning { background: rgba(245, 158, 11, 0.2); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.4); }
+.badge-success { background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+.badge-info    { background: rgba(96, 165, 250, 0.15); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.3); }
+.badge-pdf     { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.badge-css     { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+.badge-txt     { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.3); }
+/* ============================================================
+   INTERAKTYWNA HOLOGRAFICZNA MAPA ARCHITEKTURY (EFFECT WOW)
+============================================================ */
+
+.holo-architecture-card {
+    background: rgba(10, 15, 30, 0.85);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(0, 224, 255, 0.3);
+    border-radius: 24px;
+    padding: 25px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 224, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Pasek Nagłówkowy & Filtry */
+.holo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 224, 255, 0.2);
+}
+
+.holo-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.holo-title h3 {
+    margin: 0;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.live-pulse {
+    width: 10px;
+    height: 10px;
+    background: #00e0ff;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #00e0ff;
+    animation: pulseGlow 1.8s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 224, 255, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(0, 224, 255, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 224, 255, 0); }
+}
+
+.holo-filters {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: rgba(0, 224, 255, 0.2);
+    border-color: #00e0ff;
+    color: #00e0ff;
+    box-shadow: 0 0 15px rgba(0, 224, 255, 0.3);
+}
+
+/* Przestrzeń Robocza Mapy */
+.holo-viewport {
+    position: relative;
+    min-height: 620px;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 224, 255, 0.03), transparent 70%);
+    border-radius: 18px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    padding: 30px;
+}
+
+/* Animowane Laserowe Linie SVG */
+.connections-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.laser-path {
+    fill: none;
+    stroke: url(#cyanLaser);
+    stroke-width: 2.5;
+    stroke-dasharray: 8, 8;
+    animation: laserFlow 25s linear infinite;
+    opacity: 0.4;
+    transition: all 0.4s ease;
+}
+
+@keyframes laserFlow {
+    from { stroke-dashoffset: 400; }
+    to { stroke-dashoffset: 0; }
+}
+
+/* Aktywny podświetlony laser */
+.laser-path.active-laser {
+    stroke: #00e0ff;
+    stroke-width: 4;
+    stroke-dasharray: none;
+    opacity: 1;
+    filter: drop-shadow(0 0 8px #00e0ff);
+}
+
+/* Układ Kolumnowy Węzłów */
+.nodes-container {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.node-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.column-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: rgba(0, 224, 255, 0.6);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+/* Węzeł Holograficzny (Plik) */
+.holo-node {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    perspective: 1000px;
+}
+
+.holo-node:hover {
+    background: rgba(0, 224, 255, 0.12);
+    border-color: #00e0ff;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 224, 255, 0.25);
+}
+
+.holo-node.dimmed {
+    opacity: 0.2;
+    filter: grayscale(80%);
+    transform: scale(0.96);
+}
+
+.holo-node.highlighted {
+    border-color: #00e0ff;
+    box-shadow: 0 0 25px rgba(0, 224, 255, 0.5);
+    background: rgba(0, 224, 255, 0.2);
+}
+
+.special-app {
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
+.node-icon {
+    font-size: 22px;
+    width: 28px;
+    text-align: center;
+}
+
+.node-icon.html { color: #ea580c; }
+.node-icon.css  { color: #38bdf8; }
+.node-icon.pdf  { color: #ef4444; }
+.node-icon.info { color: #60a5fa; }
+.node-icon.folder { color: #f59e0b; }
+.node-icon.lock { color: #f59e0b; }
+
+.node-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.node-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.node-sub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.node-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.status-live { background: rgba(52, 211, 153, 0.2); color: #34d399; }
+.status-sub  { background: rgba(96, 165, 250, 0.2); color: #60a5fa; }
+.status-auth { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+.status-css  { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+.status-pdf  { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+.status-txt  { background: rgba(203, 213, 225, 0.2); color: #cbd5e1; }
+.status-folder { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+/* Panel Inspektora Plików */
+.holo-inspector {
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 224, 255, 0.3);
+    border-radius: 16px;
+    padding: 18px 22px;
+    display: none;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.inspector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.inspector-title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #00e0ff;
+    font-size: 16px;
+}
+
+.close-inspector {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.close-inspector:hover { color: #fff; }
+
+.inspector-desc {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 12px;
+}
+
+.inspector-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.meta-item .lbl { color: rgba(255, 255, 255, 0.5); }
+.meta-item strong { color: #00e0ff; }
+.meta-item.full { width: 100%; }
+
+/* Responsywność */
+@media (max-width: 900px) {
+    .nodes-container { grid-template-columns: 1fr; gap: 20px; }
+    .connections-svg { display: none; } /* Na telefonie ukrywamy linie pod siatkę */
+}
+
+

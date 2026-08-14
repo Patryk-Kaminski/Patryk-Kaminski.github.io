@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patryk Kamiński — Portfolio Front-End</title>
+    <link rel="stylesheet" href="style1.css">
+    <!-- Font Awesome do ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonty -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- PASEK NAWIGACJI / HEADER -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="portfolio.html" class="logo">
+                <span class="logo-accent">&lt;PK&gt;</span> FrontDev
+            </a>
+
+            <!-- PLAKIETKA DEMO PORTAL (Z POPRZEDNIEGO KROKU) -->
+            <div class="demo-badge-wrapper">
+                <div class="demo-badge">
+                    <span class="badge-dot"></span>
+                    DEMO PORTAL
+                </div>
+                <div class="demo-tooltip">
+                    <div class="tooltip-header">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00e0ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <span>Tryb Demonstracyjny</span>
+                    </div>
+                    <div class="tooltip-body">
+                        Strona statyczna demo. Aplikacja nie posiada aktywnego połączenia z bazą danych SQL — opcje działają w trybie podglądu.
+                    </div>
+                </div>
+            </div>
+
+            <nav class="nav-links">
+                <a href="#hero" class="active"><i class="fa-solid fa-pen-nib"></i> Rysunek</a>
+                <a href="#skills"><i class="fa-solid fa-code"></i> Umiejętności</a>
+                <a href="#projects"><i class="fa-solid fa-laptop-code"></i> Projekty</a>
+                <a href="#contact" class="btn-contact"><i class="fa-solid fa-paper-plane"></i> Kontakt</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SEKCJA HERO: PREMIUM ANIMATED SVG & CANVAS SPARK PENCIL -->
+<section id="hero" class="hero-section">
+    <!-- Tło z pulsującą aurą i siatką -->
+    <div class="hero-glow-bg"></div>
+    <div class="hero-grid-pattern"></div>
+
+    <div class="container text-center hero-content">
+        
+        <p class="section-tag">
+            <span class="tag-dots"></span>
+            FRONT-END DEVELOPER & UI ARTIST
+            <span class="tag-dots"></span>
+        </p>
+
+        <!-- KONTENER SVG & CANVAS -->
+        <div class="svg-drawing-container" id="heroDrawingArea" title="Kliknij, aby odtworzyć animację ponownie">
+            
+            <!-- WARSTWA CANVAS NA ISKRY Z PISAKA -->
+            <canvas id="heroSparkCanvas" class="hero-spark-canvas"></canvas>
+
+            <!-- GŁÓWNE SVG TYPOGRAFICZNE -->
+            <svg class="handwritten-svg" viewBox="0 0 1000 270" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Import czcionek premium bezpośrednio do SVG -->
+                    <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@900&display=swap');
+
+                        .svg-text-portfolio {
+                            font-family: 'Montserrat', sans-serif;
+                            font-size: 54px;
+                            font-weight: 900;
+                            letter-spacing: 16px;
+                            text-transform: uppercase;
+                        }
+
+                        .svg-text-signature {
+                            font-family: 'Alex Brush', cursive;
+                            font-size: 96px;
+                            font-weight: 400;
+                        }
+                    </style>
+
+                    <!-- Gradient neonowy (Cyan -> Fiolet -> Magenty) -->
+                    <linearGradient id="premiumInkGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#00f0ff" />
+                        <stop offset="50%" stop-color="#a855f7" />
+                        <stop offset="100%" stop-color="#ff007a" />
+                    </linearGradient>
+
+                    <!-- Wielowarstwowy filtr neony / Glow -->
+                    <filter id="neonGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur1" />
+                        <feGaussianBlur stdDeviation="12" result="blur2" />
+                        <feMerge>
+                            <feMergeNode in="blur2" />
+                            <feMergeNode in="blur1" />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+
+                    <!-- Maska odkrywająca nagłówek PORTFOLIO -->
+                    <clipPath id="portfolioClip">
+                        <rect id="portfolioClipRect" x="0" y="0" width="0" height="120" />
+                    </clipPath>
+
+                    <!-- Maska odkrywająca podpis PATRYK KAMIŃSKI -->
+                    <clipPath id="sigClip">
+                        <rect id="sigClipRect" x="0" y="110" width="0" height="150" />
+                    </clipPath>
+                </defs>
+
+                <!-- Linie pomocnicze (Styl szkicownika UI) -->
+                <line x1="80" y1="95" x2="920" y2="95" class="guide-line dash" />
+                <line x1="50" y1="215" x2="950" y2="215" class="guide-line" />
+
+                <!-- ================= PORTFOLIO ================= -->
+                <!-- Obrys (Stroke) -->
+                <text x="500" y="80" text-anchor="middle" class="svg-text-portfolio text-stroke" clip-path="url(#portfolioClip)">PORTFOLIO</text>
+                <!-- Wypełnienie (Fill with Glow) -->
+                <text x="500" y="80" text-anchor="middle" class="svg-text-portfolio text-fill" id="portfolioFillText">PORTFOLIO</text>
+
+                <!-- ================= PATRYK KAMIŃSKI ================= -->
+                <!-- Obrys (Stroke) -->
+                <text x="500" y="200" text-anchor="middle" class="svg-text-signature text-stroke" clip-path="url(#sigClip)">Patryk Kamiński</text>
+                <!-- Wypełnienie (Fill with Glow) -->
+                <text x="500" y="200" text-anchor="middle" class="svg-text-signature text-fill" id="sigFillText">Patryk Kamiński</text>
+
+                <!-- ================= FUTURYSTYCZNY CYBER-STYLUS / PISAK ================= -->
+                <g id="heroStylus" class="hero-stylus">
+                    <!-- Laserowa poduszka świetlna -->
+                    <circle cx="0" cy="0" r="12" class="stylus-aura" />
+                    <circle cx="0" cy="0" r="4" class="stylus-core" />
+                    <circle cx="0" cy="0" r="1.8" fill="#ffffff" />
+
+                    <!-- Ergonomiczny korpus rysika 3D -->
+                    <g transform="rotate(-40) translate(0, -3)">
+                        <!-- Grot -->
+                        <polygon points="0,0 -5,-14 5,-14" fill="#00f0ff" />
+                        <!-- Pierścień diodowy -->
+                        <rect x="-5" y="-17" width="10" height="3" fill="#ff007a" rx="1" />
+                        <!-- Korpus metaliczny -->
+                        <rect x="-5.5" y="-55" width="11" height="38" rx="3" fill="url(#premiumInkGradient)" opacity="0.9" stroke="rgba(255,255,255,0.4)" stroke-width="0.8" />
+                        <!-- Błysk na korpusie -->
+                        <rect x="-3" y="-50" width="3" height="28" fill="rgba(255,255,255,0.35)" rx="1" />
+                        <!-- Zwieńczenie -->
+                        <circle cx="0" cy="-55" r="5.5" fill="#a855f7" />
+                    </g>
+                </g>
+            </svg>
+        </div>
+
+        <p class="hero-subtitle">
+            Tworzę nowoczesne, interaktywne interfejsy z dbałością o detale, mikro-interakcje i płynne animacje CSS/SVG.
+        </p>
+
+        <!-- PRZYCISKI AKCJI Z TOOLTIPEM I ANIMACJAMI HOVER -->
+<!-- KONTENER PRZYCISKÓW AKCJI -->
+<div class="hero-actions">
+  
+  <!-- Przycisk Główny: Powrót do Portfolio -->
+  <a href="index.html" class="btn btn-primary">
+    <i class="fa-solid fa-arrow-left-long btn-icon"></i>
+    <span>Powrót do Portfolio</span>
+    <span class="btn-shine"></span>
+  </a>
+
+  <!-- Wrapper na Przycisk Pytajnika z Tooltipem -->
+  <div class="info-btn-wrapper">
+    <a href="index.html" class="info-btn" aria-label="Powrót do strony głównej">
+      <svg class="info-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <span class="btn-pulse-ring"></span>
+    </a>
+
+    <!-- Neonowy Tooltip: Powrót do strony głównej -->
+    <div class="hero-tooltip" role="tooltip">
+      <i class="fa-solid fa-house tooltip-icon"></i>
+      <span>Powrót do strony głównej</span>
+    </div>
+  </div>
+
+</div>
+</section>
+
+    <!-- SEKCJA FRONT-END SKILLS -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <h2 class="section-title"><span class="title-accent">01.</span> Tech Stack & Skills</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fa-brands fa-html5"></i></div>
+                    <h3>Semantic HTML5 & SVG</h3>
+                    <p>Zaawansowana struktura, animacje ścieżek SVG oraz optymalizacja wektorowa.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fa-brands fa-css3-alt"></i></div>
+                    <h3>Modern CSS3</h3>
+                    <p>Flexbox, Grid, zmienne CSS, Keyframe Animations, Responsive Web Design.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fa-brands fa-js"></i></div>
+                    <h3>JavaScript</h3>
+                    <p>Czysty JS (Vanilla), obsługa DOM, asynchroniczność, interaktywne moduły.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fa-brands fa-react"></i></div>
+                    <h3> UI Frameworks</h3>
+                    <p>Komponentowe podejście do budowania skalowalnych aplikacji oraz nowoczesnych paneli nawigacyjnych.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEKCJA PROJEKTY -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <h2 class="section-title"><span class="title-accent">02.</span> Wybrane Projekty</h2>
+
+            <div class="projects-grid">
+                <!-- KARTA PROJEKTU 1 -->
+                <article class="project-card">
+                    <div class="project-banner">
+                        <div class="project-preview-mockup">
+                            <span>ADMIN DASHBOARD</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3 Flex/Grid</span>
+                            <span class="tag">JS App</span>
+                        </div>
+                        <h3>System Zarządzania Panel Admina</h3>
+                        <p>Wielowątkowy panel testowy, aplikacji.</p>
+                        <div class="project-footer">
+                            <a href="app.html" class="btn-link">Zobacz Podgląd <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- KARTA PROJEKTU 2 -->
+                <article class="project-card">
+                    <div class="project-banner vector-bg">
+                        <div class="project-preview-mockup">
+                            <span>ANIMATED SVG CANVAS</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+    <div class="project-tags">
+        <span class="tag">SVG Animation</span>
+        <span class="tag">Keyframes</span>
+        <span class="tag">CSS Art</span>
+    </div>
+    <h3>Interaktywna Sygnatura Ołówkowa</h3>
+    <p>Płynna animacja rysowania konturów tekstowych za pomocą CSS i JS z imitacją ruchu rysika.</p>
+    <div class="project-footer">
+        <!-- ZMIENIONY PRZYCISK: WYWOŁUJE DEDYKOWANY MODAL -->
+       <!-- KARTA PROJEKTU 2 -->
+<a href="#" class="btn-link" onclick="openSignatureModal(); return false;">
+    Zobacz Animację <i class="fa-solid fa-arrow-right"></i>
+</a>
+    </div>
+</div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="footer">
+        <div class="container text-center">
+            <div class="footer-logo">&lt;PK&gt; Patryk Kamiński</div>
+            <p>Projektowanie i Kodowanie Interfejsów Front-End</p>
+            <p class="copyright">&copy; 2026 Patryk Kamiński. Wszelkie prawa zastrzeżone.</p>
+        </div>
+    </footer>
+
+<!-- DEDYKOWANY MODAL: STUDIO SYGNATURY OŁÓWKOWEJ -->
+<div id="signatureModal" class="sig-modal-overlay">
+    <div class="sig-modal-card">
+        <button class="sig-close-btn" onclick="closeSignatureModal()" aria-label="Zamknij">&times;</button>
+        
+        <div class="sig-modal-header">
+            <h3><i class="fa-solid fa-pen-ruler"></i> Studio Sygnatury Ołówkowej</h3>
+            <p id="modalSubheading">Odtwarzanie animacji symulatora pisania neonowego</p>
+        </div>
+
+        <div class="sig-canvas-container" id="canvasContainer">
+    <svg id="sigSvg" viewBox="0 0 850 220" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)">
+        <defs>
+            <!-- GRADIENT W PRZESTRZENI UŻYTKOWNIKA (naprawia znikanie pionowych linii) -->
+            <linearGradient id="sigInkGradient" x1="0" y1="0" x2="850" y2="0" gradientUnits="userSpaceOnUse">
+                <stop id="gradStop1" offset="0%" stop-color="#00e0ff" />
+                <stop id="gradStop2" offset="100%" stop-color="#a855f7" />
+            </linearGradient>
+
+            <filter id="sigGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
+                <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+        </defs>
+
+        <!-- Linie siatki pomocniczej -->
+        <line x1="20" y1="160" x2="830" y2="160" class="sig-guide-line" />
+        <line x1="20" y1="110" x2="830" y2="110" class="sig-guide-line dash" />
+
+        <!-- PEŁNY, KOMPLETNY AUTOGRAF "Patryk Kamiński" -->
+        <g id="sigPathGroup" filter="url(#sigGlow)">
+            <!-- P -->
+            <path class="sig-path" d="M 45 60 C 43 95, 43 125, 45 160" />
+            <path class="sig-path" d="M 45 60 C 110 55, 110 110, 45 110" />
+            <!-- a -->
+            <path class="sig-path" d="M 135 135 C 115 110, 105 160, 130 160 C 145 160, 150 135, 150 160" />
+            <!-- t -->
+            <path class="sig-path" d="M 172 75 L 168 160 C 168 160, 180 160, 185 155" />
+            <path class="sig-path" d="M 155 105 L 185 105" />
+            <!-- r -->
+            <path class="sig-path" d="M 200 115 L 200 160" />
+            <path class="sig-path" d="M 200 130 C 210 115, 225 115, 230 125" />
+            <!-- y -->
+            <path class="sig-path" d="M 245 115 C 243 140, 243 155, 245 155 C 245 185, 225 195, 215 185" />
+            <path class="sig-path" d="M 265 115 L 235 170" />
+            <!-- k -->
+            <path class="sig-path" d="M 288 60 L 282 160" />
+            <path class="sig-path" d="M 305 115 L 285 135 L 310 160" />
+
+            <!-- K -->
+            <path class="sig-path" d="M 362 60 L 358 160" />
+            <path class="sig-path" d="M 405 65 L 360 115 L 410 160" />
+            <!-- a -->
+            <path class="sig-path" d="M 445 135 C 425 110, 415 160, 440 160 C 455 160, 460 135, 460 160" />
+            <!-- m -->
+            <path class="sig-path" d="M 480 115 L 480 160" />
+            <path class="sig-path" d="M 480 130 C 490 115, 505 115, 505 160" />
+            <path class="sig-path" d="M 505 130 C 515 115, 530 115, 530 160" />
+            <!-- i -->
+            <path class="sig-path" d="M 550 115 L 550 160" />
+            <path class="sig-path" d="M 550 90 L 550 92" />
+            <!-- ń -->
+            <path class="sig-path" d="M 570 115 L 570 160" />
+            <path class="sig-path" d="M 570 130 C 580 115, 595 115, 595 160" />
+            <path class="sig-path" d="M 580 100 L 590 85" />
+            <!-- s -->
+            <path class="sig-path" d="M 625 120 C 610 110, 610 135, 625 145 C 635 150, 620 165, 610 160" />
+            <!-- k -->
+            <path class="sig-path" d="M 652 60 L 648 160" />
+            <path class="sig-path" d="M 670 115 L 650 135 L 675 160" />
+            <!-- i -->
+            <path class="sig-path" d="M 695 115 L 695 160" />
+            <path class="sig-path" d="M 695 90 L 695 92" />
+        </g>
+
+        <!-- RYSUNEK UŻYTKOWNIKA -->
+        <g id="userDrawContainer" filter="url(#sigGlow)"></g>
+
+        <!-- DYNAMICZNY RYSIK -->
+        <g id="sigPencil" class="sig-pencil-group">
+            <path d="M -25 -25 L -5 -5 L 0 0 L -5 -5 L -25 -25 Z" fill="#00e0ff" />
+            <polygon points="0,0 -8,-3 -3,-8" fill="#fff" />
+            <circle cx="0" cy="0" r="4" class="sig-spark" />
+        </g>
+    </svg>
+</div>
+
+        <!-- PANEL STEROWANIA -->
+        <div class="sig-controls">
+            <div class="control-group">
+                <label><i class="fa-solid fa-palette"></i> Neon:</label>
+                <div class="color-presets">
+                    <button class="color-btn active" style="background:#00e0ff;" onclick="setSigColor('#00e0ff', '#a855f7', this)"></button>
+                    <button class="color-btn" style="background:#38ef7d;" onclick="setSigColor('#11998e', '#38ef7d', this)"></button>
+                    <button class="color-btn" style="background:#ff007f;" onclick="setSigColor('#ff007f', '#7928ca', this)"></button>
+                    <button class="color-btn" style="background:#ffb703;" onclick="setSigColor('#ffb703', '#fb8500', this)"></button>
+                </div>
+            </div>
+
+            <div class="control-group" id="speedControlGroup">
+                <label for="speedRange"><i class="fa-solid fa-gauge-high"></i> Czas: <span id="speedVal">4s</span></label>
+                <input type="range" id="speedRange" min="1" max="8" step="0.5" value="4" oninput="updateSigSpeed(this.value)">
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-sig-mode" id="toggleDrawBtn" onclick="toggleUserDrawMode()">
+                    <i class="fa-solid fa-hand-pointer"></i> Rysuj Samemu
+                </button>
+
+                <button class="btn-sig-replay" id="replayBtn" onclick="playSignatureAnimation()">
+                    <i class="fa-solid fa-rotate-right"></i> Odtwórz Autograf
+                </button>
+
+                <button class="btn-sig-clear" id="clearBtn" style="display: none;" onclick="clearUserCanvas()">
+                    <i class="fa-solid fa-trash-can"></i> Wyczyść
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+//hero 
+document.addEventListener('DOMContentLoaded', () => {
+    initPremiumHeroAnimation();
+});
+
+function initPremiumHeroAnimation() {
+    const container = document.getElementById('heroDrawingArea');
+    const stylus = document.getElementById('heroStylus');
+    const canvas = document.getElementById('heroSparkCanvas');
+    const portClip = document.getElementById('portfolioClipRect');
+    const sigClip = document.getElementById('sigClipRect');
+    const portFill = document.getElementById('portfolioFillText');
+    const sigFill = document.getElementById('sigFillText');
+
+    if (!stylus || !canvas || !portClip || !sigClip) return;
+
+    // Konfiguracja Canvas dla iskier
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+        const rect = container.getBoundingClientRect();
+        canvas.width = rect.width * window.devicePixelRatio;
+        canvas.height = rect.height * window.devicePixelRatio;
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Klasa cząsteczki (Iskry)
+    class SparkParticle {
+        constructor(x, y) {
+            const containerRect = container.getBoundingClientRect();
+            // Przeliczenie ze współrzędnych viewBox SVG (1000x270) na piksele Canvas
+            const scaleX = containerRect.width / 1000;
+            const scaleY = containerRect.height / 270;
+
+            this.x = x * scaleX;
+            this.y = y * scaleY;
+            this.vx = (Math.random() - 0.5) * 2.5;
+            this.vy = (Math.random() - 0.5) * 2.5 - 1.2;
+            this.size = Math.random() * 3.5 + 1.5;
+            this.life = 1.0;
+            this.decay = Math.random() * 0.03 + 0.02;
+            
+            const colors = ['#00f0ff', '#a855f7', '#ff007a', '#ffffff'];
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.life -= this.decay;
+        }
+
+        draw(context) {
+            context.save();
+            context.globalAlpha = Math.max(0, this.life);
+            context.fillStyle = this.color;
+            context.shadowBlur = 8;
+            context.shadowColor = this.color;
+            context.beginPath();
+            context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            context.fill();
+            context.restore();
+        }
+    }
+
+    function emitSparks(x, y, count = 2) {
+        for (let i = 0; i < count; i++) {
+            particles.push(new SparkParticle(x, y));
+        }
+    }
+
+    function renderParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = particles.length - 1; i >= 0; i--) {
+            particles[i].update();
+            particles[i].draw(ctx);
+            if (particles[i].life <= 0) {
+                particles.splice(i, 1);
+            }
+        }
+        requestAnimationFrame(renderParticles);
+    }
+    renderParticles();
+
+    // Główny kontroler sekwencji animacji
+    let isAnimating = false;
+
+    async function runSequence() {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        // Reset
+        stylus.classList.remove('resting', 'gliding');
+        portClip.setAttribute('width', '0');
+        sigClip.setAttribute('width', '0');
+        portFill.style.opacity = '0';
+        sigFill.style.opacity = '0';
+
+        // 1. Start w lewym punkcie "PORTFOLIO" (X: 180, Y: 80)
+        stylus.style.opacity = '1';
+        updateStylusPos(180, 80);
+
+        await new Promise(r => setTimeout(r, 200));
+
+        // 2. Rysowanie PORTFOLIO (Szerokość klipu od 0 do 1000)
+        await animateClipAndStylus({
+            clipElem: portClip,
+            startX: 180,
+            endX: 820,
+            y: 80,
+            duration: 1.8,
+            onStep: (x, y) => emitSparks(x, y, 2)
+        });
+
+        // Wypełnienie PORTFOLIO płynnym atramentem
+        portFill.style.opacity = '1';
+
+        // 3. Przelot pisaka łukiem do początku podpisu (X: 190, Y: 200)
+        stylus.classList.add('gliding');
+        await glideStylus(820, 80, 190, 200, 0.65);
+        stylus.classList.remove('gliding');
+
+        // 4. Rysowanie PATRYK KAMIŃSKI
+        await animateClipAndStylus({
+            clipElem: sigClip,
+            startX: 190,
+            endX: 810,
+            y: 200,
+            duration: 2.6,
+            isSignature: true,
+            onStep: (x, y) => emitSparks(x, y, 3)
+        });
+
+        // Wypełnienie Sygnatury
+        sigFill.style.opacity = '1';
+
+        // 5. Zakończenie i stan spoczynku
+        stylus.style.setProperty('--end-x', '810px');
+        stylus.style.setProperty('--end-y', '200px');
+        stylus.classList.add('resting');
+
+        isAnimating = false;
+    }
+
+    function updateStylusPos(x, y) {
+        stylus.setAttribute('transform', `translate(${x.toFixed(1)}, ${y.toFixed(1)})`);
+    }
+
+    // Animacja odkrywania i ruchu pisaka
+    function animateClipAndStylus({ clipElem, startX, endX, y, duration, isSignature, onStep }) {
+        return new Promise(resolve => {
+            let startTime = null;
+
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const elapsed = (timestamp - startTime) / 1000;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Smooth Cubic Easing
+                const eased = progress < 0.5 
+                    ? 4 * progress * progress * progress 
+                    : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+                const currentX = startX + (endX - startX) * eased;
+                
+                // Dodajemy lekkie falowanie pionowe (efekt kaligrafii)
+                const waveY = isSignature ? y + Math.sin(progress * Math.PI * 12) * 4 : y;
+
+                // Aktualizacja maski SVG i pozycji rysika
+                clipElem.setAttribute('width', `${(currentX + 20).toFixed(1)}`);
+                updateStylusPos(currentX, waveY);
+
+                if (onStep) onStep(currentX, waveY);
+
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    resolve();
+                }
+            }
+
+            requestAnimationFrame(step);
+        });
+    }
+
+    // Przelot pisaka między słowami po łuku Beziera
+    function glideStylus(x1, y1, x2, y2, duration) {
+        return new Promise(resolve => {
+            let startTime = null;
+
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const elapsed = (timestamp - startTime) / 1000;
+                const p = Math.min(elapsed / duration, 1);
+
+                const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+
+                // Łuk kwadratowy Beziera
+                const controlY = Math.min(y1, y2) - 30;
+                const curX = (1 - eased) * (1 - eased) * x1 + 2 * (1 - eased) * eased * ((x1 + x2) / 2) + eased * eased * x2;
+                const curY = (1 - eased) * (1 - eased) * y1 + 2 * (1 - eased) * eased * controlY + eased * eased * y2;
+
+                updateStylusPos(curX, curY);
+
+                if (p < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    resolve();
+                }
+            }
+
+            requestAnimationFrame(step);
+        });
+    }
+
+    // Start po załadowaniu
+    setTimeout(runSequence, 300);
+
+    // Replay po kliknięciu
+    if (container) {
+        container.addEventListener('click', () => {
+            if (!isAnimating) runSequence();
+        });
+    }
+}
+
+
+
+
+//interaktywa
+// STAN GLOBALNY
+let sigAnimId = null;
+let sigDuration = 4;
+let isUserDrawingMode = false;
+let isDrawing = false;
+let currentPath = null;
+let isEventsInitialized = false;
+
+// 1. OTWIERANIE I ZAMYKANIE MODALA
+function openSignatureModal() {
+    const modal = document.getElementById('signatureModal');
+    if (!modal) return;
+
+    modal.classList.add('active');
+    
+    // Inicjalizacja zdarzeń rysowania po otwarciu
+    initUserDrawingEvents();
+
+    setTimeout(() => {
+        playSignatureAnimation();
+    }, 60);
+}
+
+function closeSignatureModal() {
+    const modal = document.getElementById('signatureModal');
+    if (modal) modal.classList.remove('active');
+
+    if (sigAnimId) {
+        cancelAnimationFrame(sigAnimId);
+        sigAnimId = null;
+    }
+
+    const pencil = document.getElementById('sigPencil');
+    if (pencil) pencil.style.opacity = '0';
+}
+
+// 2. AUTOMATYCZNA ANIMACJA AUTOGRAFU
+function playSignatureAnimation() {
+    if (isUserDrawingMode) toggleUserDrawMode(false);
+
+    const group = document.getElementById('sigPathGroup');
+    const pencil = document.getElementById('sigPencil');
+    if (!group || !pencil) return;
+
+    if (sigAnimId) cancelAnimationFrame(sigAnimId);
+
+    const paths = Array.from(group.querySelectorAll('path'));
+    if (paths.length === 0) return;
+
+    let totalLength = 0;
+    const pathData = paths.map(p => {
+        p.style.visibility = 'visible';
+        const len = p.getTotalLength();
+        p.style.strokeDasharray = `${len} ${len}`;
+        p.style.strokeDashoffset = `${len}`;
+        totalLength += len;
+        return { element: p, length: len };
+    });
+
+    void group.getBoundingClientRect();
+
+    pencil.style.opacity = '1';
+    let startTime = null;
+
+    function animateFrame(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = (timestamp - startTime) / 1000;
+        const progress = Math.min(elapsed / sigDuration, 1);
+        const targetDistance = progress * totalLength;
+
+        let accumulated = 0;
+        let currentPoint = { x: 45, y: 60 };
+
+        for (let item of pathData) {
+            const pathEnd = accumulated + item.length;
+
+            if (targetDistance >= pathEnd) {
+                item.element.style.strokeDashoffset = '0';
+                currentPoint = item.element.getPointAtLength(item.length);
+            } else if (targetDistance > accumulated) {
+                const localDistance = targetDistance - accumulated;
+                item.element.style.strokeDashoffset = `${item.length - localDistance}`;
+                currentPoint = item.element.getPointAtLength(localDistance);
+            } else {
+                item.element.style.strokeDashoffset = `${item.length}`;
+            }
+
+            accumulated = pathEnd;
+        }
+
+        pencil.setAttribute('transform', `translate(${currentPoint.x}, ${currentPoint.y})`);
+
+        if (progress < 1) {
+            sigAnimId = requestAnimationFrame(animateFrame);
+        } else {
+            setTimeout(() => {
+                if (!isUserDrawingMode) pencil.style.opacity = '0';
+            }, 300);
+        }
+    }
+
+    sigAnimId = requestAnimationFrame(animateFrame);
+}
+
+// 3. ZMIANA PRĘDKOŚCI I KOLORU NEONU
+function updateSigSpeed(val) {
+    sigDuration = parseFloat(val);
+    const speedVal = document.getElementById('speedVal');
+    if (speedVal) speedVal.innerText = val + 's';
+
+    if (!isUserDrawingMode) playSignatureAnimation();
+}
+
+function setSigColor(c1, c2, btnElement) {
+    const stop1 = document.getElementById('gradStop1');
+    const stop2 = document.getElementById('gradStop2');
+    if (stop1) stop1.setAttribute('stop-color', c1);
+    if (stop2) stop2.setAttribute('stop-color', c2);
+
+    document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+    if (btnElement) btnElement.classList.add('active');
+}
+
+// 4. PRZEŁĄCZANIE TRYBU RYSOWANIA
+function toggleUserDrawMode(forceState) {
+    if (typeof forceState === 'boolean') {
+        isUserDrawingMode = forceState;
+    } else {
+        isUserDrawingMode = !isUserDrawingMode;
+    }
+
+    // Upewniamy się, że eventy są podpięte
+    initUserDrawingEvents();
+
+    const container = document.getElementById('canvasContainer');
+    const toggleBtn = document.getElementById('toggleDrawBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const speedGroup = document.getElementById('speedControlGroup');
+    const autoGroup = document.getElementById('sigPathGroup');
+    const pencil = document.getElementById('sigPencil');
+    const subheading = document.getElementById('modalSubheading');
+
+    if (sigAnimId) cancelAnimationFrame(sigAnimId);
+
+    if (isUserDrawingMode) {
+        if (container) container.classList.add('drawing-active');
+        if (toggleBtn) {
+            toggleBtn.classList.add('active');
+            toggleBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Tryb Auto';
+        }
+        if (clearBtn) clearBtn.style.display = 'inline-flex';
+        if (speedGroup) {
+            speedGroup.style.opacity = '0.3';
+            speedGroup.style.pointerEvents = 'none';
+        }
+        if (autoGroup) autoGroup.style.display = 'none';
+        if (pencil) pencil.style.opacity = '0';
+        if (subheading) subheading.innerText = 'Chwyć myszkę lub użyj palca i narysuj własny autograf!';
+    } else {
+        if (container) container.classList.remove('drawing-active');
+        if (toggleBtn) {
+            toggleBtn.classList.remove('active');
+            toggleBtn.innerHTML = '<i class="fa-solid fa-hand-pointer"></i> Rysuj Samemu';
+        }
+        if (clearBtn) clearBtn.style.display = 'none';
+        if (speedGroup) {
+            speedGroup.style.opacity = '1';
+            speedGroup.style.pointerEvents = 'all';
+        }
+        if (autoGroup) autoGroup.style.display = 'block';
+        if (subheading) subheading.innerText = 'Odtwarzanie animacji symulatora pisania neonowego';
+        playSignatureAnimation();
+    }
+}
+
+function clearUserCanvas() {
+    const userContainer = document.getElementById('userDrawContainer');
+    if (userContainer) userContainer.innerHTML = '';
+    const pencil = document.getElementById('sigPencil');
+    if (pencil) pencil.style.opacity = '0';
+}
+
+// 5. OBSŁUGA RYSOWANIA RĘCZNEGO (MYSZKA I DOTYK)
+function getSvgCoordinates(e) {
+    const svg = document.getElementById('sigSvg');
+    if (!svg) return { x: 0, y: 0 };
+
+    const pt = svg.createSVGPoint();
+    
+    if (e.touches && e.touches.length > 0) {
+        pt.x = e.touches[0].clientX;
+        pt.y = e.touches[0].clientY;
+    } else {
+        pt.x = e.clientX;
+        pt.y = e.clientY;
+    }
+
+    const ctm = svg.getScreenCTM();
+    if (!ctm) return { x: 0, y: 0 };
+
+    const svgP = pt.matrixTransform(ctm.inverse());
+    return { x: svgP.x, y: svgP.y };
+}
+
+function initUserDrawingEvents() {
+    const svg = document.getElementById('sigSvg');
+    if (!svg || isEventsInitialized) return;
+
+    const pencil = document.getElementById('sigPencil');
+
+    function startDrawing(e) {
+        if (!isUserDrawingMode) return;
+        isDrawing = true;
+
+        const pt = getSvgCoordinates(e);
+
+        currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        currentPath.setAttribute("stroke", "url(#sigInkGradient)");
+        currentPath.setAttribute("stroke-width", "4");
+        currentPath.setAttribute("fill", "none");
+        currentPath.setAttribute("stroke-linecap", "round");
+        currentPath.setAttribute("stroke-linejoin", "round");
+        currentPath.setAttribute("d", `M ${pt.x.toFixed(1)} ${pt.y.toFixed(1)}`);
+
+        const userContainer = document.getElementById('userDrawContainer');
+        if (userContainer) userContainer.appendChild(currentPath);
+
+        if (pencil) {
+            pencil.style.opacity = '1';
+            pencil.setAttribute('transform', `translate(${pt.x.toFixed(1)}, ${pt.y.toFixed(1)})`);
+        }
+    }
+
+    function draw(e) {
+        if (!isUserDrawingMode || !isDrawing || !currentPath) return;
+
+        if (e.cancelable) e.preventDefault();
+        const pt = getSvgCoordinates(e);
+
+        let d = currentPath.getAttribute("d");
+        currentPath.setAttribute("d", `${d} L ${pt.x.toFixed(1)} ${pt.y.toFixed(1)}`);
+
+        if (pencil) {
+            pencil.setAttribute('transform', `translate(${pt.x.toFixed(1)}, ${pt.y.toFixed(1)})`);
+        }
+    }
+
+    function stopDrawing() {
+        if (!isUserDrawingMode || !isDrawing) return;
+        isDrawing = false;
+        currentPath = null;
+        if (pencil) pencil.style.opacity = '0';
+    }
+
+    // Myszka
+    svg.addEventListener('mousedown', startDrawing);
+    window.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', stopDrawing);
+
+    // Dotyk (Ekrany mobilne)
+    svg.addEventListener('touchstart', startDrawing, { passive: false });
+    window.addEventListener('touchmove', draw, { passive: false });
+    window.addEventListener('touchend', stopDrawing);
+
+    isEventsInitialized = true;
+}
+
+// 6. INICJALIZACJA PO ZAŁADOWANIU DOM
+document.addEventListener('DOMContentLoaded', function() {
+    initUserDrawingEvents();
+
+    const modal = document.getElementById('signatureModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) closeSignatureModal();
+        });
+    }
+});
+</script>
+</body>
+</html>

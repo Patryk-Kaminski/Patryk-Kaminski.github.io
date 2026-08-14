@@ -13,6 +13,7 @@
     <div class="loader-wrapper">
         <div class="loader"></div>
     </div>
+    
     <header class="hero">
         <nav class="nav">
             <h1 class="logo" data-text="Patryk Kamiński"><span>P</span>atryk <span>K</span>amiński</h1>
@@ -27,7 +28,6 @@
                 <a href="index.html">PL</a>
                 <a href="indexAng.html">EN</a>
             </div>
-
         </nav>
 
         <div class="hero-content">
@@ -39,10 +39,10 @@
                 Tworzę nowoczesne strony, aplikacje i rozwiązania IT
             </p>
 
-            <a href="#projects" class="btn">
+            <!-- Przycisk otwierający Modal -->
+            <button id="open-projects-modal" class="btn">
                 Zobacz projekty
-            </a>
-
+            </button>
         </div>
     </header>
 
@@ -65,11 +65,12 @@
             <div class="skill">Networking</div>
         </div>
     </section>
+
     <section id="certificates" class="section glass">
         <h2>Certyfikaty</h2>
         <div class="accomplishment-grid">
             <div class="card">
-                <h3>Tytuł Techinik Informatyk</h3>
+                <h3>Tytuł Technik Informatyk</h3>
                 <p>Specjalista konfiguracji sprzętu, administracji systemów i sieci, serwisant komputerowy oraz tworzenie stron internetowych i baz danych.</p>
             </div>
             <div class="card">
@@ -78,7 +79,7 @@
             </div>
             <div class="card">
                 <h3>Programowanie CS M1 (JAVA)</h3>
-                <p>Programowanie w języku JAVA. Usługa certyfikowana egzaminem ECCC z programowania na poziomie zawansowanym. Ukończona na poziomie 100%</p>
+                <p>Programowanie w języku JAVA. Usługa certyfikowana egzaminem ECCC z programowania na poziomie zaawansowanym. Ukończona na poziomie 100%</p>
             </div>
             <div class="card">
                 <h3>Web Developer</h3>
@@ -86,7 +87,7 @@
             </div>
             <div class="card">
                 <h3>Cisco Wprowadzenie do Cyberbezpieczeństwa</h3>
-                <p>Europejski Ceryfikat z podstaw Cyberbezpieczeństwa</p>
+                <p>Europejski Certyfikat z podstaw Cyberbezpieczeństwa</p>
             </div>
         </div>
     </section>
@@ -100,7 +101,7 @@
             </div>
             <div class="card">
                 <h3>Portfolio</h3>
-                <p>Strona dotycząca moich osiągnięć, okazuje moje umiejętności w zakresie porjektowaniu storn WWW</p>
+                <p>Strona dotycząca moich osiągnięć, okazuje moje umiejętności w zakresie projektowaniu stron WWW</p>
             </div>
             <div class="card">
                 <h3>Unity</h3>
@@ -109,38 +110,79 @@
         </div>
     </section>
 
-
     <section id="contact" class="section">
-
-            <h2>Kontakt</h2>
-            <p><img src="icons/email.svg" alt="Email" > <strong> <a href="mailto:p.k03@wp.pl"> p.k03@wp.pl </a></strong></p>
-            
-            <div class="socials">
-                <a href="cv.html" target="_blank" class="social cv">
-                    <img src="icons/cv.png" alt="CV">
-                </a>
-                <a href="https://github.com/Patryk-Kaminski" target="_blank" class="social github">
-                    <img src="icons/github.svg" alt="GitHub">
-                </a>
-
-                <a href="https://www.linkedin.com/in/patryk-kami%C5%84ski-5720733aa/" target="_blank" class="social linkedin">
-                    <img src="icons/linkedin.svg" alt="LinkedIn">
-                </a>
-
-                <a href="https://www.instagram.com/patrykkaminski.777?igsh=NGxpY3drZ25oYmdh" target="_blank" class="social instagram">
-                    <img src="icons/instagram.svg" alt="Instagram">
-                </a>
-
-            </div>
-
+        <h2>Kontakt</h2>
+        <p><img src="icons/email.svg" alt="Email"> <strong><a href="mailto:p.k03@wp.pl"> p.k03@wp.pl </a></strong></p>
+        
+        <div class="socials">
+            <a href="cv.html" target="_blank" class="social cv">
+                <img src="icons/cv.png" alt="CV">
+            </a>
+            <a href="https://github.com/Patryk-Kaminski" target="_blank" class="social github">
+                <img src="icons/github.svg" alt="GitHub">
+            </a>
+            <a href="https://www.linkedin.com/in/patryk-kami%C5%84ski-5720733aa/" target="_blank" class="social linkedin">
+                <img src="icons/linkedin.svg" alt="LinkedIn">
+            </a>
+            <a href="https://www.instagram.com/patrykkaminski.777?igsh=NGxpY3drZ25oYmdh" target="_blank" class="social instagram">
+                <img src="icons/instagram.svg" alt="Instagram">
+            </a>
+        </div>
     </section>
 
     <footer>
         <p>&copy; 2026 Patryk Kamiński</p>
     </footer>
+
+    <!-- =========================
+         ANIMOWANY MODAL PROJEKTÓW
+    ========================= -->
+    <div id="projects-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-container">
+            <button class="modal-close" id="close-modal" aria-label="Zamknij modal">&times;</button>
+            <div class="modal-header">
+                <h2>Wybrane <span>Projekty</span></h2>
+                <p>Oto szczegółowy przegląd moich prac i aplikacji</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-projects-grid">
+                    <div class="modal-project-card">
+                        <span class="project-badge">Aplikacja Web</span>
+                        <h3>System Logowania & Baza Danych</h3>
+                        <p>Kompleksowa aplikacja webowa zawierająca bezpieczną autoryzację użytkowników, zarządzanie sesją oraz panel administracyjny.</p>
+                        <div class="project-tech">
+                            <span>PHP</span><span>SQL</span><span>HTML5</span><span>CSS3</span><span>JS</span>
+                        </div>
+                        <a href="app.html" class="modal-btn-link">Otwórz panel logowania &rarr;</a>
+                    </div>
+
+                    <div class="modal-project-card">
+                        <span class="project-badge">Front-End</span>
+                        <h3>Interaktywne Portfolio IT</h3>
+                        <p>Uwaga strona zawierająca różnorodne animacje, ukazające potenciał użcia SVG za pomocą JS i CSS</p>
+                        <div class="project-tech">
+                            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+                        </div>
+                        <a href="portfolio.html" target="_blank" class="modal-btn-link">Zobacz animowane porfolio &rarr;</a>
+                    </div>
+
+                    <div class="modal-project-card">
+                        <span class="project-badge">Game Dev</span>
+                        <h3>Gra 2D/3D w Unity</h3>
+                        <p>Projekt gry stworzony od podstaw w silniku Unity z wykorzystaniem własnych skryptów w języku C# oraz dopracowaną fizyką.</p>
+                        <div class="project-tech">
+                            <span>Unity</span><span>C#</span><span>Game Design</span>
+                        </div>
+                        <a href="https://github.com/Patryk-Kaminski" target="_blank" class="modal-btn-link">Zobacz kod / demo &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         /* =========================
-         SCROLL REVEAL
+          SCROLL REVEAL
         ========================= */
         const reveals = document.querySelectorAll('.section, .skill, .card, .hero-content');
 
@@ -165,7 +207,7 @@
 
 
         /* =========================
-         PARALLAX 
+          PARALLAX 
         ========================= */
         window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero-content');
@@ -175,7 +217,7 @@
 
 
         /* =========================
-         HOLOGRAM TYPEWRITER
+          HOLOGRAM TYPEWRITER
         ========================= */
         const textElement = document.querySelector('.hero-content h2 span');
         const words = ["Informatykiem", "Web designer"];
@@ -259,7 +301,7 @@
 
 
         /* =========================
-         CARDS 
+          CARDS 3D TILT
         ========================= */
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('mousemove', e => {
@@ -319,7 +361,7 @@
 
 
         /* =========================
-           SCANLINE / HOLOGRAM NAGŁÓWKI
+            SCANLINE / HOLOGRAM NAGŁÓWKI
         ========================= */
         const headers = document.querySelectorAll('.section h2');
 
@@ -335,32 +377,66 @@
 
         const magneticButtons = document.querySelectorAll('.btn, .social');
 
-magneticButtons.forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-        const position = btn.getBoundingClientRect();
-        const x = e.clientX - position.left - position.width / 2;
-        const y = e.clientY - position.top - position.height / 2;
+        magneticButtons.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const position = btn.getBoundingClientRect();
+                const x = e.clientX - position.left - position.width / 2;
+                const y = e.clientY - position.top - position.height / 2;
 
-        
-        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-    });
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
 
-    btn.addEventListener('mouseleave', () => {
-        // Wróć na miejsce po zabraniu myszki
-        btn.style.transform = 'translate(0px, 0px)';
-        // Resetuj transformacje z innych efektów (np. hover scale) po chwili
-        setTimeout(() => { btn.style.transform = ''; }, 300); 
-    });
-});
-window.addEventListener("load", () => {
-    const loader = document.querySelector(".loader-wrapper");
-    loader.classList.add("loader-hidden");
-    
-    // Usuń element z DOM po zakończeniu animacji, żeby nie blokował kliknięć
-    loader.addEventListener("transitionend", () => {
-        loader.remove();
-    });
-});
-</script>
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0px, 0px)';
+                setTimeout(() => { btn.style.transform = ''; }, 300); 
+            });
+        });
+
+        window.addEventListener("load", () => {
+            const loader = document.querySelector(".loader-wrapper");
+            loader.classList.add("loader-hidden");
+            
+            loader.addEventListener("transitionend", () => {
+                loader.remove();
+            });
+        });
+
+        /* =========================
+            LOGIKA MODALA PROJEKTÓW
+        ========================= */
+        const modal = document.getElementById('projects-modal');
+        const openModalBtn = document.getElementById('open-projects-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        function openModal(e) {
+            if (e) e.preventDefault();
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden'; // Blokada przewijania tła
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = ''; // Przywrócenie przewijania tła
+        }
+
+        if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+        if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+
+        // Zamykanie po kliknięciu poza obszar okna modala
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Zamykanie klawiszem ESC
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>

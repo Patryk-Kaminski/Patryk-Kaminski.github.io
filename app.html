@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Logowania & Admina | Demo App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stylapp.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+    
+</head>
+<body class="login-page">
+
+    <!-- Preloader -->
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Kontener na płynne powiadomienia (Toast Notify) -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Przycisk powrotu do portfolio -->
+    <a href="index.html" class="back-to-home-btn" id="backHomeBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Powrót do portfolio
+    </a>
+
+    <!-- ==========================================================================
+       SEKCJA LOGOWANIA
+       ========================================================================== -->
+    <div class="login-wrapper" id="loginSection">
+        <div class="login-card glass float-card" id="loginCard">
+            <div class="login-header">
+                <div class="header-top-bar">
+                    <div class="demo-badge-wrapper">
+    <div class="demo-badge">
+        <span class="badge-dot"></span>
+        DEMO PORTAL
+    </div>
+    
+    <!-- Dedykowana chmurka (tooltip) po najechaniu -->
+    <div class="demo-tooltip">
+        <div class="tooltip-header">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00e0ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span>Tryb Demonstracyjny</span>
+        </div>
+        <div class="tooltip-body">
+            Strona statyczna demo. Aplikacja nie posiada aktywnego połączenia z bazą danych SQL — opcje działają w trybie podglądu.
+        </div>
+    </div>
+</div>
+                    <div class="info-tooltip-wrapper">
+                        <button type="button" class="info-btn" aria-label="Informacje o logowaniu demo">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+    </svg>
+</button>
+                        <div class="tooltip-content">
+                            <strong>Wersja Demonstracyjna</strong>
+                            <p>Aby odblokować panel administratora, użyj danych:</p>
+                            <div class="creds-box">
+                                <div>Login: <code>admin</code></div>
+                                <div>Hasło: <code>:root</code></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2>Panel <span>Administratora</span></h2>
+                <p>System zarządzania bazą danych i aplikacją</p>
+            </div>
+
+            <form id="admin-login-form" class="login-form" autocomplete="off">
+                <div class="form-group">
+                    <label for="username">Login / Email</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="username" name="username" placeholder="Wprowadź login admina" required autocomplete="username">
+                        <span class="input-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Hasło</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
+                        <button type="button" id="toggle-password" class="toggle-password-btn" title="Pokaż/Ukryj hasło">
+                            <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember">
+                        Zapamiętaj mnie
+                    </label>
+                    <a href="#" id="forgot-password-link" class="forgot-password">Zapomniałeś hasła?</a>
+                </div>
+
+                <button type="submit" class="btn login-btn">
+                    <span>Zaloguj się</span>
+                    <div class="btn-loader"></div>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>&copy; 2026 Admin Portal — Bazy danych & Systemy Webowe</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==========================================================================
+       SEKCJA PANELU ADMINISTRATORA (UKRYTA PRZED ZALOGOWANIEM)
+       ========================================================================== -->
+    <div class="admin-app-container hidden" id="adminDashboard">
+        
+        <!-- LEWY PANEL NAWIGACJI (SIDEBAR) -->
+        <aside class="sidebar">
+            <div>
+                <div class="sidebar-brand">
+                    <div class="brand-logo">PK</div>
+                    <div class="brand-title">Admin<span>Panel</span></div>
+                </div>
+
+                <ul class="sidebar-nav">
+                    <li class="nav-item active" data-tab="dashboard" data-title="Strona główna">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        Strona główna
+                    </li>
+                    <li class="nav-item" data-tab="users" data-title="Zarządzanie Użytkownikami">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        Użytkownicy
+                    </li>
+                    <li class="nav-item" data-tab="products" data-title="Katalog Produktów">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        Produkty
+                    </li>
+                    <li class="nav-item" data-tab="settings" data-title="Ustawienia Systemu">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        Ustawienia
+                    </li>
+                    <li class="nav-item" data-tab="languages" data-title="Języki i Tłumaczenia">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        Języki
+                    </li>
+                    <li class="nav-item" data-tab="structure" data-title="Struktura Witryny">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                        Struktura
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">AD</div>
+                    <div class="user-details">
+                        <div class="name">Administrator</div>
+                        <div class="role">root@system</div>
+                    </div>
+                </div>
+                <button type="button" class="btn-icon-logout" id="logoutBtn" title="Wyloguj się">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- PRAWY PANEL SRODKOWY (MAIN CONTENT AREA) -->
+        <main class="main-wrapper">
+            <header class="top-header">
+                <div class="page-title">
+                    <h1 id="currentTabTitle">Strona główna</h1>
+                    <p>Witaj w panelu zarządzania aplikacją demonstracyjną.</p>
+                </div>
+            </header>
+
+            <div class="content-area">
+                
+                <!-- 1. ZAKŁADKA: STRONA GŁÓWNA -->
+                <div class="tab-panel" id="tab-dashboard">
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="label">Suma Sprzedaży</div>
+            <div class="val" id="kpi-sales-val">42 850 zł</div>
+            <div class="trend" id="kpi-sales-trend">▲ +12.0% w tym miesiącu</div>
+        </div>
+        <div class="kpi-card">
+            <div class="label">Użytkownicy</div>
+            <div class="val" id="kpi-users-val">1 240</div><br>
+            <div class="trend" id="kpi-users-trend">▲ +85 nowych</div>
+        </div>
+        <div class="kpi-card">
+            <div class="label">Zamówienia</div>
+            <div class="val" id="kpi-orders-val">318</div><br>
+            <div class="trend" id="kpi-orders-trend">▲ +5.4% r/r</div>
+        </div>
+        <div class="kpi-card">
+            <div class="label">Status Serwera</div>
+            <div class="val" id="kpi-server-val" style="color: #34d399;">99.9%</div><br>
+            <div class="trend" id="kpi-ping-val" style="color: #94a3b8;">Czas odpowiedzi: <span id="ping-num">42</span>ms</div>
+        </div>
+    </div>
+</div>
+
+                    <div class="card-panel">
+                        <h3 style="margin-top:0; margin-bottom:16px;">Ostatnie powiadomienia i zdarzenia</h3>
+                        <p style="color: #94a3b8; font-size: 0.88rem;">Logi operacyjne i status automatycznych zadań cron:</p>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Zdarzenie</th>
+                                    <th>Użytkownik</th>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Autoryzacja w panelu admina</td>
+                                    <td>admin</td>
+                                    <td>Dzisiaj, 14:32</td>
+                                    <td><span class="badge badge-success">Sukces</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Kopia zapasowa Bazy PostgreSQL</td>
+                                    <td>System (Cron)</td>
+                                    <td>Dzisiaj, 03:00</td>
+                                    <td><span class="badge badge-success">Wykonano</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Edycja pliku konfiguracyjnego</td>
+                                    <td>dev_user</td>
+                                    <td>Wczoraj, 18:15</td>
+                                    <td><span class="badge badge-info">Zapisano</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 2. ZAKŁADKA: UŻYTKOWNICY -->
+                <div class="tab-panel hidden" id="tab-users">
+                    <div class="card-panel">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 style="margin:0;">Zarządzanie Użytkownikami</h3>
+                            <button class="btn-sm" style="background:#6366f1; border:none;" onclick="showToast('info', 'Użytkownicy', 'Otwieranie formularza dodawania...')">+ Dodaj użytkownika</button>
+                        </div>
+
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nazwa / Email</th>
+                                    <th>Rola</th>
+                                    <th>Status</th>
+                                    <th>Ostatnie logowanie</th>
+                                    <th>Akcje</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Jan Kowalski</strong><br><span style="color:#64748b; font-size:0.78rem;">jan@example.com</span></td>
+                                    <td><span class="badge badge-info">Administrator</span></td>
+                                    <td><span class="badge badge-success">Aktywny</span></td>
+                                    <td>Dzisiaj, 14:32</td>
+                                    <td><button class="btn-sm">Edytuj</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Anna Nowak</strong><br><span style="color:#64748b; font-size:0.78rem;">anna@example.com</span></td>
+                                    <td><span class="badge badge-info">Edytor</span></td>
+                                    <td><span class="badge badge-success">Aktywny</span></td>
+                                    <td>Wczoraj, 09:12</td>
+                                    <td><button class="btn-sm">Edytuj</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Piotr Wiśniewski</strong><br><span style="color:#64748b; font-size:0.78rem;">piotr@example.com</span></td>
+                                    <td><span class="badge badge-info">Użytkownik</span></td>
+                                    <td><span class="badge badge-warning">Zablokowany</span></td>
+                                    <td>12.05.2026</td>
+                                    <td><button class="btn-sm">Odblokuj</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 3. ZAKŁADKA: PRODUKTY -->
+                <div class="tab-panel hidden" id="tab-products">
+                    <div class="card-panel">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 style="margin:0;">Katalog Produktów</h3>
+                            <button class="btn-sm" style="background:#6366f1; border:none;" onclick="showToast('info', 'Produkty', 'Kreator nowego produktu...')">+ Nowy Produkt</button>
+                        </div>
+
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Produkt</th>
+                                    <th>Kategoria</th>
+                                    <th>Cena</th>
+                                    <th>Magazyn</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Licencja AdminCore Pro</strong></td>
+                                    <td>Oprogramowanie</td>
+                                    <td>299.00 zł</td>
+                                    <td>∞ Nielimitowano</td>
+                                    <td><span class="badge badge-success">Dostępny</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Moduł Integracji API</strong></td>
+                                    <td>Wtyczki</td>
+                                    <td>149.00 zł</td>
+                                    <td>14 szt.</td>
+                                    <td><span class="badge badge-success">Dostępny</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Dedykowany Serwer VPS</strong></td>
+                                    <td>Usługi</td>
+                                    <td>899.00 zł</td>
+                                    <td>0 szt.</td>
+                                    <td><span class="badge badge-warning">Brak na stanie</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 4. ZAKŁADKA: USTAWIENIA -->
+                <div class="tab-panel hidden" id="tab-settings">
+                    <div class="card-panel">
+                        <h3 style="margin-top:0; margin-bottom:20px;">Ustawienia Ogólne Systemu</h3>
+                        <form class="form-grid" onsubmit="event.preventDefault(); showToast('success', 'Ustawienia', 'Zapisano zmiany konfiguracyjne!');">
+                            <div class="field-group">
+                                <label for="site-name">Nazwa Aplikacji</label>
+                                <input type="text" id="site-name" class="field-input" value="AdminCore Portal Demo">
+                            </div>
+                            <div class="field-group">
+                                <label for="admin-email">Główny Email Admina</label>
+                                <input type="email" id="admin-email" class="field-input" value="admin@example.com">
+                            </div>
+                            <div class="field-group">
+                                <label for="env-mode">Środowisko</label>
+                                <select id="env-mode" class="field-input">
+                                    <option value="prod">Produkcyjne (Production)</option>
+                                    <option value="dev" selected>Demonstracyjne (Demo)</option>
+                                </select>
+                            </div>
+                            <div class="field-group" style="grid-column: 1 / -1;">
+                                <button type="submit" class="btn-sm" style="background:#6366f1; border:none; padding:12px 24px; font-weight:600;">Zapisz Ustawienia</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 5. ZAKŁADKA: JĘZYKI -->
+                <div class="tab-panel hidden" id="tab-languages">
+                    <div class="card-panel">
+                        <h3 style="margin-top:0; margin-bottom:20px;">Obsługiwane Wersje Językowe</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Kod</th>
+                                    <th>Język</th>
+                                    <th>Tłumaczenie</th>
+                                    <th>Status</th>
+                                    <th>Domyślny</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>PL</code></td>
+                                    <td>Polski</td>
+                                    <td>100% przetłumaczone</td>
+                                    <td><span class="badge badge-success">Aktywny</span></td>
+                                    <td><span class="badge badge-info">Tak</span></td>
+                                </tr>
+                                <tr>
+                                    <td><code>EN</code></td>
+                                    <td>English (US)</td>
+                                    <td>98% przetłumaczone</td>
+                                    <td><span class="badge badge-success">Aktywny</span></td>
+                                    <td>Nie</td>
+                                </tr>
+                                <tr>
+                                    <td><code>DE</code></td>
+                                    <td>Deutsch</td>
+                                    <td>75% przetłumaczone</td>
+                                    <td><span class="badge badge-warning">W trakcie</span></td>
+                                    <td>Nie</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+               <!-- 6. ZAKŁADKA: INTERAKTYWNA MAPA ARCHITEKTURY -->
+<div class="tab-panel hidden" id="tab-structure">
+    <div class="holo-architecture-card">
+        
+        <!-- Pasek Kontrolny i Filtry -->
+        <div class="holo-header">
+            <div class="holo-title">
+                <span class="live-pulse"></span>
+                <h3><i class="fa-solid fa-network-wired"></i> Architektura Systemu i Zależności Plików</h3>
+            </div>
+            
+            <div class="holo-filters">
+                <button class="filter-btn active" onclick="filterNodes('all')"><i class="fa-solid fa-border-all"></i> Pełna Mapa</button>
+                <button class="filter-btn" onclick="filterNodes('html')"><i class="fa-brands fa-html5"></i> Widoki (HTML)</button>
+                <button class="filter-btn" onclick="filterNodes('css')"><i class="fa-brands fa-css3-alt"></i> Style (CSS)</button>
+                <button class="filter-btn" onclick="filterNodes('docs')"><i class="fa-solid fa-file-pdf"></i> Zasoby & PDF</button>
+            </div>
+        </div>
+
+        <!-- Główna Przestrzeń Mapy (Canvas z Liniami i Węzłami) -->
+        <div class="holo-viewport" id="holoViewport">
+            
+            <!-- Dynamiczne Animowane Linie SVG (Laserowe Połączenia) -->
+            <svg class="connections-svg" id="connectionsSvg">
+                <defs>
+                    <!-- Gradienty dla laserów -->
+                    <linearGradient id="cyanLaser" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00e0ff" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="#0088ff" stop-opacity="0.2"/>
+                    </linearGradient>
+                    <linearGradient id="purpleLaser" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#a855f7" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="#ec4899" stop-opacity="0.2"/>
+                    </linearGradient>
+                </defs>
+
+                <!-- Linie połączeń między węzłami (rysowane JS lub stałe SVG) -->
+                <!-- HTML -> CSS -->
+                <path d="M 180,110 Q 300,60 420,80" class="laser-path line-index-styles" />
+                <path d="M 180,240 Q 300,180 420,80" class="laser-path line-indexang-styles" />
+                <path d="M 180,370 Q 300,380 420,360" class="laser-path line-cv-cvstyle" />
+                <path d="M 180,500 Q 300,440 420,360" class="laser-path line-cvang-cvstyle" />
+                <path d="M 180,630 Q 300,600 420,580" class="laser-path line-app-stylapp" />
+
+                <!-- HTML -> PDF / Zasoby -->
+                <path d="M 180,370 Q 400,280 660,260" class="laser-path line-cv-pdf" />
+                <path d="M 180,500 Q 400,320 660,130" class="laser-path line-cvang-pdf" />
+                <path d="M 180,630 Q 450,680 660,540" class="laser-path line-app-icons" />
+            </svg>
+
+            <!-- Siatka Węzłów (Nodes Layout) -->
+            <div class="nodes-container">
+                
+                <!-- KOLUMNA 1: GŁÓWNE WIDOKI (HTML) -->
+                <div class="node-column">
+                    <div class="column-label">PUNKTY WEJŚCIA (HTML)</div>
+                    
+                    <div class="holo-node" data-cat="html" data-id="index" onclick="inspectNode('index.html', 'Główna Strona Portfolio (PL)', 'Łączy z: styles.css, indexAng.html', '8.4 KB', 'HTML5, SEO')">
+                        <div class="node-glow"></div>
+                        <i class="fa-brands fa-html5 node-icon html"></i>
+                        <div class="node-info">
+                            <span class="node-title">index.html</span>
+                            <span class="node-sub">Strona Główna (PL)</span>
+                        </div>
+                        <span class="node-badge status-live">Live</span>
+                    </div>
+
+                    <div class="holo-node" data-cat="html" data-id="indexAng" onclick="inspectNode('indexAng.html', 'Strona Główna (EN)', 'Łączy z: styles.css, index.html', '8.1 KB', 'HTML5, I18n')">
+                        <div class="node-glow"></div>
+                        <i class="fa-brands fa-html5 node-icon html"></i>
+                        <div class="node-info">
+                            <span class="node-title">indexAng.html</span>
+                            <span class="node-sub">Strona Główna (EN)</span>
+                        </div>
+                        <span class="node-badge status-live">Live</span>
+                    </div>
+
+                    <div class="holo-node" data-cat="html" data-id="cv" onclick="inspectNode('cv.html', 'Interaktywne CV (PL)', 'Łączy z: cvStyle.css, CvPL.pdf', '12.3 KB', 'HTML5, Interactive')">
+                        <div class="node-glow"></div>
+                        <i class="fa-brands fa-html5 node-icon html"></i>
+                        <div class="node-info">
+                            <span class="node-title">cv.html</span>
+                            <span class="node-sub">Interaktywne CV (PL)</span>
+                        </div>
+                        <span class="node-badge status-sub">Podstrona</span>
+                    </div>
+
+                    <div class="holo-node" data-cat="html" data-id="cvAng" onclick="inspectNode('cvAng.html', 'Interaktywne CV (EN)', 'Łączy z: cvStyle.css, CvANG.pdf', '11.9 KB', 'HTML5, English')">
+                        <div class="node-glow"></div>
+                        <i class="fa-brands fa-html5 node-icon html"></i>
+                        <div class="node-info">
+                            <span class="node-title">cvAng.html</span>
+                            <span class="node-sub">Interaktywne CV (EN)</span>
+                        </div>
+                        <span class="node-badge status-sub">Podstrona</span>
+                    </div>
+
+                    <div class="holo-node special-app" data-cat="html" data-id="app" onclick="inspectNode('app.html', 'Strefa Premium / Dashboard Admina', 'Łączy z: stylapp.css, icons/', '15.6 KB', 'App, Auth, JS')">
+                        <div class="node-glow"></div>
+                        <i class="fa-solid fa-lock node-icon lock"></i>
+                        <div class="node-info">
+                            <span class="node-title">app.html</span>
+                            <span class="node-sub">Strefa Premium</span>
+                        </div>
+                        <span class="node-badge status-auth">🔒 Auth</span>
+                    </div>
+                </div>
+
+                <!-- KOLUMNA 2: STYLIZACJA (CSS) -->
+                <div class="node-column">
+                    <div class="column-label">WARSTWA STYLÓW (CSS)</div>
+
+                    <div class="holo-node" data-cat="css" data-id="styles" onclick="inspectNode('styles.css', 'Główne Style Globalne', 'Używane w: index.html, indexAng.html', '24.1 KB', 'CSS3, Variables')">
+                        <div class="node-glow"></div>
+                        <i class="fa-brands fa-css3-alt node-icon css"></i>
+                        <div class="node-info">
+                            <span class="node-title">styles.css</span>
+                            <span class="node-sub">Globalny Arkusz Stylów</span>
+                        </div>
+                        <span class="node-badge status-css">Core CSS</span>
+                    </div>
+
+                    <div class="holo-node" data-cat="css" data-id="cvStyle" onclick="inspectNode('cvStyle.css', 'Style Dedykowane dla CV', 'Używane w: cv.html, cvAng.html', '14.2 KB', 'Print, Responsive')">
+                        <div class="node-glow"></div>
+                        <i class="fa-brands fa-css3-alt node-icon css"></i>
+                        <div class="node-info">
+                            <span class="node-title">cvStyle.css</span>
+                            <span class="node-sub">Style Szablonu CV</span>
+                        </div>
+                        <span class="node-badge status-css">CV Module</span>
+                    </div>
+
+                    <div class="holo-node" data-cat="css" data-id="stylapp" onclick="inspectNode('stylapp.css', 'Style Aplikacji & Glassmorphic UI', 'Używane w: app.html', '18.8 KB', 'Animations, Glass')">
+                        <div class="node-glow"></div>
+                        <i class="fa-brands fa-css3-alt node-icon css"></i>
+                        <div class="node-info">
+                            <span class="node-title">stylapp.css</span>
+                            <span class="node-sub">Style Panelu Premium</span>
+                        </div>
+                        <span class="node-badge status-css">App Module</span>
+                    </div>
+                </div>
+
+                <!-- KOLUMNA 3: DOKUMENTY & ZASOBY -->
+                <div class="node-column">
+                    <div class="column-label">DOKUMENTY I ASSETY</div>
+
+                    <div class="holo-node" data-cat="docs" data-id="CvANG" onclick="inspectNode('CvANG.pdf', 'Dokument CV w Języku Angielskim', 'Pobierany z poziomu cvAng.html', '245 KB', 'Vector PDF')">
+                        <div class="node-glow"></div>
+                        <i class="fa-solid fa-file-pdf node-icon pdf"></i>
+                        <div class="node-info">
+                            <span class="node-title">CvANG.pdf</span>
+                            <span class="node-sub">Pobierz CV (English)</span>
+                        </div>
+                        <span class="node-badge status-pdf">PDF</span>
+                    </div>
+
+                    <div class="holo-node" data-cat="docs" data-id="CvPL" onclick="inspectNode('CvPL.pdf', 'Dokument CV w Języku Polskim', 'Pobierany z poziomu cv.html', '240 KB', 'Vector PDF')">
+                        <div class="node-glow"></div>
+                        <i class="fa-solid fa-file-pdf node-icon pdf"></i>
+                        <div class="node-info">
+                            <span class="node-title">CvPL.pdf</span>
+                            <span class="node-sub">Pobierz CV (Polski)</span>
+                        </div>
+                        <span class="node-badge status-pdf">PDF</span>
+                    </div>
+
+                    <div class="holo-node" data-cat="docs" data-id="readme" onclick="inspectNode('README.txt', 'Dokumentacja Techniczna Projektu', 'Instrukcje instalacji i konfiguracji', '3.2 KB', 'Plain Text')">
+                        <div class="node-glow"></div>
+                        <i class="fa-solid fa-circle-info node-icon info"></i>
+                        <div class="node-info">
+                            <span class="node-title">README.txt</span>
+                            <span class="node-sub">Dokumentacja</span>
+                        </div>
+                        <span class="node-badge status-txt">Docs</span>
+                    </div>
+
+                    <div class="holo-node" data-cat="docs" data-id="icons" onclick="inspectNode('icons/', 'Katalog Ikon i Grafiki Vectorialnej', 'Używane w całym projekcie', '1.2 MB', 'SVG, PNG')">
+                        <div class="node-glow"></div>
+                        <i class="fa-solid fa-folder-open node-icon folder"></i>
+                        <div class="node-info">
+                            <span class="node-title">icons/</span>
+                            <span class="node-sub">Katalog Zasobów</span>
+                        </div>
+                        <span class="node-badge status-folder">Folder</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Panel Inspektora Pliku (Wysuwa się po kliknięciu na węzeł) -->
+        <div class="holo-inspector" id="holoInspector">
+            <div class="inspector-content">
+                <div class="inspector-header">
+                    <div class="inspector-title-group">
+                        <i class="fa-solid fa-microchip glow-cyan"></i>
+                        <h4 id="inspFileName">index.html</h4>
+                    </div>
+                    <button class="close-inspector" onclick="closeInspector()">&times;</button>
+                </div>
+                <p class="inspector-desc" id="inspDesc">Kliknij dowolny element na mapie, aby zobaczyć jego relacje.</p>
+                <div class="inspector-meta">
+                    <div class="meta-item"><span class="lbl">Rozmiar:</span> <strong id="inspSize">-</strong></div>
+                    <div class="meta-item"><span class="lbl">Technologie:</span> <strong id="inspTech">-</strong></div>
+                    <div class="meta-item full"><span class="lbl">Powiązania:</span> <span id="inspRel">-</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ==========================================================================
+       SKRYPTY LOGIKI (LOGIN, TABS, TOAST, MOUSE EFFECTS)
+       ========================================================================== -->
+    <script>
+// 1. Otwieranie szczegółów pliku w Inspektorze
+function inspectNode(fileName, desc, rel, size, tech) {
+    const inspector = document.getElementById('holoInspector');
+    document.getElementById('inspFileName').innerText = fileName;
+    document.getElementById('inspDesc').innerText = desc;
+    document.getElementById('inspRel').innerText = rel;
+    document.getElementById('inspSize').innerText = size;
+    document.getElementById('inspTech').innerText = tech;
+
+    inspector.style.display = 'block';
+
+    // Podświetlenie powiązanych połączeń
+    highlightNodeConnections(fileName);
+}
+
+function closeInspector() {
+    document.getElementById('holoInspector').style.display = 'none';
+    resetHighlights();
+}
+
+// 2. Podświetlanie węzła i przyciemnianie reszty
+function highlightNodeConnections(fileName) {
+    const nodes = document.querySelectorAll('.holo-node');
+    nodes.forEach(node => {
+        const title = node.querySelector('.node-title').innerText;
+        if (title === fileName) {
+            node.classList.add('highlighted');
+            node.classList.remove('dimmed');
+        } else {
+            node.classList.add('dimmed');
+            node.classList.remove('highlighted');
+        }
+    });
+}
+
+function resetHighlights() {
+    document.querySelectorAll('.holo-node').forEach(node => {
+        node.classList.remove('dimmed', 'highlighted');
+    });
+}
+
+// 3. Filtrowanie węzłów wg przycisków na górze
+function filterNodes(category) {
+    // Aktywuj przycisk
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    const nodes = document.querySelectorAll('.holo-node');
+    nodes.forEach(node => {
+        const nodeCat = node.getAttribute('data-cat');
+        if (category === 'all' || nodeCat === category) {
+            node.classList.remove('dimmed');
+            node.style.display = 'flex';
+        } else {
+            node.classList.add('dimmed');
+        }
+    });
+}
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+    // Początkowe wartości KPI
+    const state = {
+        sales: 42850,
+        salesTrend: 12.0,
+        users: 1240,
+        usersTrend: 85,
+        orders: 318,
+        ordersTrend: 5.4,
+        server: 99.9,
+        ping: 42
+    };
+
+    // Formatowanie liczb (np. 42 850)
+    const formatNum = (num) => new Intl.NumberFormat('pl-PL').format(Math.round(num));
+
+    // Funkcja płynnej animacji liczbowej z błyskiem CSS
+    function animateValue(elem, start, end, duration, formatFn, isUp) {
+        if (!elem) return;
+        
+        // Dodaj klasę błysku (zielona/czerwona)
+        const flashClass = isUp ? 'flash-up' : 'flash-down';
+        elem.classList.add(flashClass);
+        setTimeout(() => elem.classList.remove(flashClass), 600);
+
+        const startTime = performance.now();
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Płynna interpolacja (Easing)
+            const current = start + (end - start) * progress;
+            elem.innerText = formatFn(current);
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+        requestAnimationFrame(update);
+    }
+
+    // --- LOGIKA AKTUALIZACJI POSZCZEGÓLNYCH KPI ---
+
+    // 1. Sprzedaż
+    function updateSales() {
+        const delta = (Math.random() - 0.45) * 450; // Częściej rośnie niż spada
+        const oldVal = state.sales;
+        state.sales = Math.max(10000, state.sales + delta);
+        const isUp = delta >= 0;
+
+        // Aktualizacja trendu
+        state.salesTrend += (Math.random() - 0.48) * 0.4;
+        
+        const elVal = document.getElementById('kpi-sales-val');
+        const elTrend = document.getElementById('kpi-sales-trend');
+
+        animateValue(elVal, oldVal, state.sales, 800, v => `${formatNum(v)} zł`, isUp);
+
+        if (elTrend) {
+            const sign = state.salesTrend >= 0 ? '▲ +' : '▼ ';
+            elTrend.innerText = `${sign}${state.salesTrend.toFixed(1)}% w tym miesiącu`;
+            elTrend.className = `trend ${state.salesTrend >= 0 ? 'trend-up' : 'trend-down'}`;
+        }
+    }
+
+    // 2. Użytkownicy
+    function updateUsers() {
+        const delta = Math.floor((Math.random() - 0.4) * 8);
+        const oldVal = state.users;
+        state.users = Math.max(100, state.users + delta);
+        const isUp = delta >= 0;
+
+        state.usersTrend = Math.max(0, state.usersTrend + (isUp ? 1 : -1));
+
+        const elVal = document.getElementById('kpi-users-val');
+        const elTrend = document.getElementById('kpi-users-trend');
+
+        animateValue(elVal, oldVal, state.users, 600, v => formatNum(v), isUp);
+
+        if (elTrend) {
+            elTrend.innerText = `▲ +${state.usersTrend} nowych`;
+            elTrend.className = 'trend trend-up';
+        }
+    }
+
+    // 3. Zamówienia
+    function updateOrders() {
+        const delta = Math.floor((Math.random() - 0.42) * 3);
+        const oldVal = state.orders;
+        state.orders = Math.max(10, state.orders + delta);
+        const isUp = delta >= 0;
+
+        state.ordersTrend += (Math.random() - 0.48) * 0.2;
+
+        const elVal = document.getElementById('kpi-orders-val');
+        const elTrend = document.getElementById('kpi-orders-trend');
+
+        animateValue(elVal, oldVal, state.orders, 500, v => formatNum(v), isUp);
+
+        if (elTrend) {
+            const sign = state.ordersTrend >= 0 ? '▲ +' : '▼ ';
+            elTrend.innerText = `${sign}${state.ordersTrend.toFixed(1)}% r/r`;
+            elTrend.className = `trend ${state.ordersTrend >= 0 ? 'trend-up' : 'trend-down'}`;
+        }
+    }
+
+    // 4. Status i Ping Serwera
+    function updateServer() {
+        // Ping
+        const oldPing = state.ping;
+        const newPing = Math.floor(35 + Math.random() * 20); // 35ms - 55ms
+        state.ping = newPing;
+
+        const elPing = document.getElementById('ping-num');
+        if (elPing) {
+            animateValue(elPing, oldPing, newPing, 400, v => Math.round(v), newPing <= oldPing);
+        }
+
+        // Status Uptime
+        const elServer = document.getElementById('kpi-server-val');
+        if (elServer && Math.random() > 0.7) {
+            const newUptime = (99.8 + Math.random() * 0.19).toFixed(1);
+            elServer.innerText = `${newUptime}%`;
+        }
+    }
+
+    // --- PĘTLA ANIMACJI (LOSOWE CZASY WYZWOLENIA) ---
+    function startLiveFeed() {
+        // Sprzedaż zmienia się co 2.5 - 4 sekundy
+        setInterval(() => updateSales(), 3000);
+
+        // Użytkownicy co 1.8 - 3 sekundy
+        setInterval(() => updateUsers(), 2200);
+
+        // Zamówienia co 3.5 sekundy
+        setInterval(() => updateOrders(), 3500);
+
+        // Ping serwera co 1.5 sekundy
+        setInterval(() => updateServer(), 1500);
+    }
+
+    startLiveFeed();
+});
+
+
+
+
+        // 1. Płynne światło podążające za kursorem
+        const light = document.createElement('div');
+        light.className = 'cursor-light';
+        document.body.appendChild(light);
+
+        let mouseX = 0, mouseY = 0;
+        let currentX = 0, currentY = 0;
+
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateLight() {
+            currentX += (mouseX - currentX) * 0.08;
+            currentY += (mouseY - currentY) * 0.08;
+            light.style.transform = `translate(${currentX - 160}px, ${currentY - 160}px)`;
+            requestAnimationFrame(animateLight);
+        }
+        animateLight();
+
+        // 2. Interaktywny 3D Tilt Efekt dla karty logowania
+        const card = document.getElementById('loginCard');
+        document.addEventListener('mousemove', (e) => {
+            if (!card || card.offsetParent === null) return;
+            const { innerWidth, innerHeight } = window;
+            const x = (e.clientX - innerWidth / 2) / (innerWidth / 2);
+            const y = (e.clientY - innerHeight / 2) / (innerHeight / 2);
+            card.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-5px)`;
+        });
+
+        // 3. System Powiadomień Toast
+        function showToast(type, title, message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+
+            const icons = {
+                success: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`,
+                error: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`,
+                info: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`
+            };
+
+            toast.innerHTML = `
+                <div class="toast-icon">${icons[type] || icons.info}</div>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close">&times;</button>
+                <div class="toast-progress"></div>
+            `;
+
+            container.appendChild(toast);
+            const closeBtn = toast.querySelector('.toast-close');
+            closeBtn.addEventListener('click', () => removeToast(toast));
+            setTimeout(() => removeToast(toast), 4500);
+        }
+
+        function removeToast(toast) {
+            if (toast.classList.contains('hide')) return;
+            toast.classList.add('hide');
+            toast.addEventListener('animationend', () => toast.remove());
+        }
+
+        // Loader strony
+        window.addEventListener("load", () => {
+            const loader = document.querySelector(".loader-wrapper");
+            if (loader) {
+                loader.classList.add("loader-hidden");
+                loader.addEventListener("transitionend", () => loader.remove());
+            }
+        });
+
+        // Przełączanie hasła (oko)
+        const togglePassword = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.classList.toggle('active');
+        });
+
+        // Zapomniałem hasła
+        document.getElementById('forgot-password-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast('info', 'Odzyskiwanie hasła', 'Dane logowania demo: admin / :root');
+        });
+
+        // 4. PRZEŁĄCZANIE ZAKŁADEK W PANELU ADMINISTRATORA
+        const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+        const currentTabTitle = document.getElementById('currentTabTitle');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetTab = item.getAttribute('data-tab');
+                const title = item.getAttribute('data-title');
+
+                navItems.forEach(i => i.classList.remove('active'));
+                tabPanels.forEach(p => p.classList.add('hidden'));
+
+                item.classList.add('active');
+                document.getElementById(`tab-${targetTab}`).classList.remove('hidden');
+                document.getElementById(`tab-${targetTab}`).classList.add('fade-in');
+                currentTabTitle.textContent = title;
+            });
+        });
+
+        // 5. OBSŁUGA LOGOWANIA ORAZ WYLOGOWANIA
+        const loginForm = document.getElementById('admin-login-form');
+        const loginSection = document.getElementById('loginSection');
+        const adminDashboard = document.getElementById('adminDashboard');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const backHomeBtn = document.getElementById('backHomeBtn');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = loginForm.querySelector('.login-btn');
+            btn.classList.add('loading');
+
+            setTimeout(() => {
+                btn.classList.remove('loading');
+                const user = document.getElementById('username').value.trim();
+                const pass = document.getElementById('password').value.trim();
+
+                if (user === 'admin' && pass === ':root') {
+                    showToast('success', 'Dostęp przyznany', 'Weryfikacja pomyślna. Wczytywanie systemu...');
+
+                    setTimeout(() => {
+                        loginSection.classList.add('fade-out');
+
+                        setTimeout(() => {
+                            loginSection.classList.add('hidden');
+                            loginSection.classList.remove('fade-out');
+                            backHomeBtn.classList.add('hidden'); // ukrywamy powrót na stronę główną, by dać pełny ekran dla admina
+
+                            adminDashboard.classList.remove('hidden');
+                            adminDashboard.classList.add('fade-in');
+                        }, 350);
+                    }, 600);
+                } else {
+                    showToast('error', 'Błąd autoryzacji', 'Nieprawidłowy login lub hasło! Użyj admin / :root');
+                }
+            }, 1000);
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            adminDashboard.classList.add('fade-out');
+
+            setTimeout(() => {
+                adminDashboard.classList.add('hidden');
+                adminDashboard.classList.remove('fade-out', 'fade-in');
+
+                loginForm.reset();
+                loginSection.classList.remove('hidden');
+                loginSection.classList.add('fade-in');
+                backHomeBtn.classList.remove('hidden');
+
+                showToast('info', 'Wylogowano', 'Pomyślnie wylogowano z systemu.');
+            }, 350);
+        });
+    </script>
+</body>
+</html>
