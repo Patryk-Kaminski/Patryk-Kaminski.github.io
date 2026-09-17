@@ -8,6 +8,242 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+    
+    <!-- =========================
+         DODATKOWE STYLE DLA POZIOMEJ DROGI KARIERY
+    ========================= -->
+    <style>
+        .horizontal-scroll-wrapper {
+            display: flex;
+            gap: 2.5rem;
+            overflow-x: auto;
+            padding: 3rem 2rem 4rem 2rem; /* Więcej miejsca na cienie */
+            scroll-snap-type: x mandatory;
+            scrollbar-width: thin;
+            scrollbar-color: #00e0ff rgba(255, 255, 255, 0.02);
+            cursor: grab;
+            scroll-behavior: smooth;
+            align-items: stretch; /* Wyrównuje wysokość wszystkich kart */
+            /* Subtelne zanikanie po bokach na większych ekranach */
+            -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+        }
+        
+        .horizontal-scroll-wrapper:active {
+            cursor: grabbing;
+        }
+
+        /* Stylizacja paska przewijania (Scrollbar) */
+        .horizontal-scroll-wrapper::-webkit-scrollbar {
+            height: 6px;
+        }
+        .horizontal-scroll-wrapper::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin: 0 2rem;
+        }
+        .horizontal-scroll-wrapper::-webkit-scrollbar-thumb {
+            background: #00e0ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.8);
+        }
+
+        /* GŁÓWNY WYGLĄD KARTY */
+        .h-card {
+            min-width: 360px;
+            max-width: 360px;
+            scroll-snap-align: center;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            flex-shrink: 0;
+            user-select: none;
+            
+            /* Glassmorphism & Stylizacja */
+            background: linear-gradient(145deg, rgba(25, 25, 30, 0.6) 0%, rgba(10, 10, 12, 0.8) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 3px solid #00e0ff; /* Wyróżniająca się góra */
+            border-radius: 16px;
+            padding: 2.5rem 2rem 2rem 2rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .h-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 224, 255, 0.15);
+            border-color: rgba(0, 224, 255, 0.3);
+            border-top-color: #00e0ff;
+        }
+
+        /* Świecący punkt osi czasu na górze każdej karty */
+        .h-card::before {
+            content: '';
+            position: absolute;
+            top: -7px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: #00e0ff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00e0ff, 0 0 20px #00e0ff;
+            z-index: 2;
+        }
+
+        /* NAGŁÓWEK KARTY (Wyśrodkowany) */
+        .h-card-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .h-card-header .date-badge {
+            display: inline-block;
+            background: rgba(0, 224, 255, 0.1);
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            color: #00e0ff;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.1);
+        }
+
+        .h-card-header h3 {
+            font-size: 1.4rem;
+            color: #ffffff;
+            margin: 0 0 0.4rem 0;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .h-card-header h4 {
+            font-size: 1rem;
+            color: #00e0ff; /* Jasnoniebieski akcent dla stanowiska */
+            margin: 0;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* CIAŁO KARTY (Zadania / Opis) */
+        .h-card-body {
+            flex-grow: 1; /* Wypełnia resztę miejsca w równej wysokości kart */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .h-card-body p {
+            font-size: 0.95rem;
+            color: #b3b3b3;
+            line-height: 1.6;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        /* Lista zadań/obowiązków */
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .task-list li {
+            font-size: 0.9rem;
+            color: #cccccc;
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 24px;
+            line-height: 1.5;
+        }
+        .task-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            top: -1px;
+            color: #00e0ff;
+            font-size: 1.2rem;
+            text-shadow: 0 0 8px rgba(0, 224, 255, 0.6);
+        }
+
+        /* Tagi z certyfikatami */
+        .cert-section {
+            margin-top: auto; /* Zawsze spycha na dół */
+            padding-top: 1rem;
+        }
+        .cert-title {
+            display: block;
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .cert-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .cert-tag {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #eaeaea;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        .cert-tag:hover {
+            border-color: #00e0ff;
+            color: #fff;
+            background: rgba(0, 224, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Karta Przyszłości (Future) */
+        .h-card.future {
+            background: transparent;
+            border: 2px dashed rgba(0, 224, 255, 0.3);
+            border-top: 2px dashed rgba(0, 224, 255, 0.3);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .h-card.future::before {
+            background: transparent;
+            border: 2px solid #00e0ff;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.5);
+            animation: pulse-dot 2s infinite;
+        }
+        .h-card.future:hover {
+            border-color: rgba(0, 224, 255, 0.6);
+            background: rgba(0, 224, 255, 0.02);
+        }
+
+        @keyframes pulse-dot {
+            0% { box-shadow: 0 0 0 0 rgba(0, 224, 255, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 224, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 224, 255, 0); }
+        }
+
+        @media (max-width: 768px) {
+            .horizontal-scroll-wrapper {
+                padding: 2rem 1rem 3rem 1rem;
+                -webkit-mask-image: none;
+                mask-image: none;
+            }
+            .h-card {
+                min-width: 320px;
+                max-width: 320px;
+                padding: 2rem 1.5rem 1.5rem 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="loader-wrapper">
@@ -20,7 +256,7 @@
             <ul>
                 <li><a href="#about">O mnie</a></li>
                 <li><a href="#skills">Umiejętności</a></li>
-                <li><a href="#certificates">Certyfikaty</a></li>
+                <li><a href="#career">Kariera</a></li>
                 <li><a href="#projects">Projekty</a></li>
                 <li><a href="#contact">Kontakt</a></li>
             </ul>
@@ -39,7 +275,6 @@
                 Tworzę nowoczesne strony, aplikacje i rozwiązania IT
             </p>
 
-            <!-- Przycisk otwierający Modal -->
             <button id="open-projects-modal" class="btn">
                 Zobacz projekty
             </button>
@@ -66,29 +301,98 @@
         </div>
     </section>
 
-    <section id="certificates" class="section glass">
-        <h2>Certyfikaty</h2>
-        <div class="accomplishment-grid">
-            <div class="card">
-                <h3>Tytuł Technik Informatyk</h3>
-                <p>Specjalista konfiguracji sprzętu, administracji systemów i sieci, serwisant komputerowy oraz tworzenie stron internetowych i baz danych.</p>
+    <!-- =========================
+         DROGA KARIERY (HORIZONTAL)
+    ========================= -->
+    <section id="career" class="section glass" style="padding-left: 0; padding-right: 0; max-width: 100%;">
+        <h2 style="padding-left: 2rem;">Droga kariery</h2>
+        <p style="padding-left: 2rem; color: #a0a0a0; margin-bottom: 0; font-size: 0.9rem;">Przesuń w prawo, aby zobaczyć więcej ➔</p>
+        
+        <div class="horizontal-scroll-wrapper" id="draggable-slider">
+            
+            <!-- Edukacja -->
+            <div class="h-card card">
+                <div class="h-card-header">
+                    <span class="date-badge">Edukacja</span>
+                    <h3>ZST nr 1 w Jaśle</h3>
+                    <h4>Profil: Informatyk</h4>
+                </div>
+                <div class="h-card-body">
+                    <p>Rozwój pasji do IT, budowanie fundamentów programowania i sieci, poparte certyfikowanymi osiągnięciami zawodowymi.</p>
+                    
+                    <div class="cert-section">
+                        <span class="cert-title">Zdobyte certyfikaty</span>
+                        <div class="cert-tags">
+                            <span class="cert-tag">Technik Informatyk </span>
+                            <span class="cert-tag">INF.02 i INF.03</span>
+                            <span class="cert-tag">Spawanie Światłowodów</span>
+                            <span class="cert-tag">CS M1 JAVA (100%)</span>
+                            <span class="cert-tag">Web Developer</span>
+                            <span class="cert-tag">Cisco CyberSecurity</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <h3>Spawanie Światłowodów</h3>
-                <p>Certyfikat spawania światłowodów, w zakresie łączenia włókien szklanych, budowy sieci światłowodowych oraz obsługi spawarek światłowodowych</p>
+
+            <!-- Praktyka: Serwisant -->
+            <div class="h-card card">
+                <div class="h-card-header">
+                    <span class="date-badge">2023 | Praktyka (1 mies.)</span>
+                    <h3>PETROSOFT SP. Z O.O.</h3>
+                    <h4>Stanowisko: Serwisant</h4>
+                </div>
+                <div class="h-card-body">
+                    <ul class="task-list">
+                        <li>Konserwacja sprzętu komputerowego i peryferyjnego w obrębie firmy</li>
+                        <li>Dbanie o poprawne działanie systemu i infrastruktury sieciowej</li>
+                        <li>Modernizacja i optymalizacja stanowisk pracy w biurze</li>
+                        <li>Sprawne rozwiązywanie problemów sprzętowych w kryzysowych sytuacjach</li>
+                    </ul>
+                </div>
             </div>
-            <div class="card">
-                <h3>Programowanie CS M1 (JAVA)</h3>
-                <p>Programowanie w języku JAVA. Usługa certyfikowana egzaminem ECCC z programowania na poziomie zaawansowanym. Ukończona na poziomie 100%</p>
+
+            <!-- Praktyka: Programista -->
+            <div class="h-card card">
+                <div class="h-card-header">
+                    <span class="date-badge">2024 | Praktyka (1 mies.)</span>
+                    <h3>PETROSOFT SP. Z O.O.</h3>
+                    <h4>Stanowisko: Programista</h4>
+                </div>
+                <div class="h-card-body">
+                    <ul class="task-list">
+                        <li>Rozwój funkcjonalności aplikacji mobilnych na różne platformy systemowe</li>
+                        <li>Współtworzenie bibliotek komponentów wielokrotnego użytku</li>
+                        <li>Implementacja algorytmów przetwarzania danych oraz interfejsów użytkownika</li>
+                        <li>Tworzenie dokumentacji technicznej i dbanie o jakość kodu</li>
+                        <li>Koordynacja spotkań z klientami i zespołami projektowymi</li>
+                    </ul>
+                </div>
             </div>
-            <div class="card">
-                <h3>Web Developer</h3>
-                <p>Certyfikat tworzeniu stron i aplikacji internetowych</p>
+
+            <!-- Praca: Web Developer -->
+            <div class="h-card card">
+                <div class="h-card-header">
+                    <span class="date-badge">Praca (5 mies.)</span>
+                    <h3>InnWeb Jasło</h3>
+                    <h4>Stanowisko: Web Developer</h4>
+                </div>
+                <div class="h-card-body">
+                    <ul class="task-list">
+                        <li>Tworzenie i rozbudowa responsywnych stron internetowych w systemie WordPress</li>
+                        <li>Praca nad zaawansowanymi stronami e-commerce o zasięgu holdingowym</li>
+                        <li>Budowa sklepów opartych o architekturę MVC (Model-View-Controller)</li>
+                        <li>Programowanie z użyciem frameworków PHP: CodeIgniter 3 i 4</li>
+                        <li>Wdrażanie i obsługa autorskiego modelu CMS dla klientów agencji</li>
+                    </ul>
+                </div>
             </div>
-            <div class="card">
-                <h3>Cisco Wprowadzenie do Cyberbezpieczeństwa</h3>
-                <p>Europejski Certyfikat z podstaw Cyberbezpieczeństwa</p>
+
+            <!-- Przyszłość -->
+            <div class="h-card card future">
+                <h3 style="color: #fff; font-size: 1.4rem; margin-bottom: 10px;">Moje następne kroki...</h3>
+                <p style="font-size: 0.95rem; color: #a0a0a0; margin: 0;">Jestem otwarty na nowe wyzwania, innowacyjne projekty IT i dalszy rozwój umiejętności w dalszej karierze</p>
             </div>
+
         </div>
     </section>
 
@@ -193,7 +497,6 @@
 
         function revealOnScroll() {
             const windowHeight = window.innerHeight;
-        
             reveals.forEach(el => {
                 const elementTop = el.getBoundingClientRect().top;
                 if (elementTop < windowHeight - 100) {
@@ -205,7 +508,6 @@
         window.addEventListener('scroll', revealOnScroll);
         revealOnScroll();
 
-
         /* =========================
           PARALLAX 
         ========================= */
@@ -215,7 +517,6 @@
             hero.style.transform = `translateY(${scrollY * 0.15}px)`;
         });
 
-
         /* =========================
           HOLOGRAM TYPEWRITER
         ========================= */
@@ -223,21 +524,18 @@
         const words = ["Informatykiem", "Web designer"];
         let wordIndex = 0, charIndex = 0, isDeleting = false;
 
-      
         const cursor = document.createElement("span");
         cursor.textContent = "|";
         cursor.style.marginLeft = "6px";
         cursor.style.animation = "blink 1.2s infinite";
         textElement.after(cursor);
 
-        
         const style = document.createElement("style");
         style.innerHTML = `
             @keyframes blink {
                 0%, 45%, 100% { opacity: 1; }
                 50%, 95% { opacity: 0; }
             }
-
             .hologram {
                 position: relative;
                 text-shadow:
@@ -246,7 +544,6 @@
                 animation: holoFloat 3s ease-in-out infinite,
                            holoFlicker 2.5s infinite;
             }
-
             .hologram::after {
                 content: attr(data-text);
                 position: absolute;
@@ -256,12 +553,10 @@
                 filter: blur(1px);
                 color: #00e0ff;
             }
-
             @keyframes holoFloat {
                 0%, 100% { transform: translateY(0); }
                 50% { transform: translateY(-2px); }
             }
-
             @keyframes holoFlicker {
                 0%, 100% { opacity: 1; }
                 50% { opacity: 0.85; }
@@ -273,7 +568,6 @@
 
         function typeEffect() {
             const currentWord = words[wordIndex];
-        
             if (!isDeleting) charIndex += 0.5;
             else charIndex -= 0.5;
         
@@ -287,18 +581,14 @@
                 speed = 1500;
                 isDeleting = true;
             }
-        
             if (isDeleting && Math.floor(charIndex) === 0) {
                 isDeleting = false;
                 wordIndex = (wordIndex + 1) % words.length;
                 speed = 500;
             }
-        
             setTimeout(typeEffect, speed);
         }
-
         typeEffect();
-
 
         /* =========================
           CARDS 3D TILT
@@ -326,7 +616,6 @@
                 card.style.transform = 'perspective(800px) rotateX(0) rotateY(0)';
             });
         });
-
 
         /* =========================
             PŁYNNE ŚWIATŁO ZA KURSOREM
@@ -356,15 +645,12 @@
             light.style.transform = `translate(${currentX - 160}px, ${currentY - 160}px)`;
             requestAnimationFrame(animateLight);
         }
-
         animateLight();
-
 
         /* =========================
             SCANLINE / HOLOGRAM NAGŁÓWKI
         ========================= */
         const headers = document.querySelectorAll('.section h2');
-
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -372,20 +658,16 @@
                 }
             });
         }, { threshold: 0.6 });
-
         headers.forEach(h => observer.observe(h));
 
         const magneticButtons = document.querySelectorAll('.btn, .social');
-
         magneticButtons.forEach(btn => {
             btn.addEventListener('mousemove', (e) => {
                 const position = btn.getBoundingClientRect();
                 const x = e.clientX - position.left - position.width / 2;
                 const y = e.clientY - position.top - position.height / 2;
-
                 btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
             });
-
             btn.addEventListener('mouseleave', () => {
                 btn.style.transform = 'translate(0px, 0px)';
                 setTimeout(() => { btn.style.transform = ''; }, 300); 
@@ -395,7 +677,6 @@
         window.addEventListener("load", () => {
             const loader = document.querySelector(".loader-wrapper");
             loader.classList.add("loader-hidden");
-            
             loader.addEventListener("transitionend", () => {
                 loader.remove();
             });
@@ -412,30 +693,64 @@
             if (e) e.preventDefault();
             modal.classList.add('active');
             modal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden'; // Blokada przewijania tła
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeModal() {
             modal.classList.remove('active');
             modal.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = ''; // Przywrócenie przewijania tła
+            document.body.style.overflow = ''; 
         }
 
         if (openModalBtn) openModalBtn.addEventListener('click', openModal);
         if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
 
-        // Zamykanie po kliknięciu poza obszar okna modala
         window.addEventListener('click', (e) => {
             if (e.target === modal) {
                 closeModal();
             }
         });
 
-        // Zamykanie klawiszem ESC
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal.classList.contains('active')) {
                 closeModal();
             }
+        });
+
+        /* =========================
+            SKRYPT: MYSZKA PRZECIĄGA OŚ KARIERY (DRAG TO SCROLL)
+        ========================= */
+        const slider = document.getElementById('draggable-slider');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.style.cursor = 'grabbing';
+            slider.style.scrollSnapType = 'none'; // Wyłączamy przyciąganie (snap) w trakcie ciągnięcia
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+            slider.style.scrollSnapType = 'x mandatory'; // Przywracamy snap
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+            slider.style.scrollSnapType = 'x mandatory'; // Przywracamy snap
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 1.5; // Szybkość przewijania
+            slider.scrollLeft = scrollLeft - walk;
         });
     </script>
 </body>

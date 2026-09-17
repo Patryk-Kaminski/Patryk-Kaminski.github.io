@@ -1253,3 +1253,135 @@ footer {
         transform: translateY(-10px) rotateX(1deg) rotateY(-1deg);
     }
 }
+/* =========================
+   SEKCJA: DROGA KARIERY (TIMELINE)
+========================= */
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 3rem auto 0;
+    padding: 2rem 0;
+}
+
+/* Pionowa święcąca linia */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px; /* Dla małych ekranów linia z lewej */
+    height: 100%;
+    width: 4px;
+    background: rgba(0, 224, 255, 0.3);
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+    padding-left: 60px;
+    width: 100%;
+}
+
+/* Animacja pojawiania się (wykorzystuje Twoją klasę .reveal) */
+.timeline-item {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease-out;
+}
+.timeline-item.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Świecące punkty (Nodes) */
+.timeline-dot {
+    position: absolute;
+    left: 12px;
+    top: 25px;
+    width: 20px;
+    height: 20px;
+    background: #00e0ff;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #00e0ff, 0 0 30px #00e0ff;
+    z-index: 2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-item:hover .timeline-dot {
+    transform: scale(1.3);
+    box-shadow: 0 0 20px #00e0ff, 0 0 40px #fff;
+}
+
+/* Stylizacje tekstowe i tło kontentu */
+.timeline-content {
+    /* Dziedziczy po .card, więc ma szklany efekt i 3D Tilt */
+    padding: 1.5rem 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.timeline-date {
+    display: inline-block;
+    color: #00e0ff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.timeline-content h3 {
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.timeline-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #d1d1d1;
+    margin: 0;
+}
+
+/* Pusty "przyszły" node (kamień milowy) */
+.timeline-item.future .timeline-dot {
+    background: transparent;
+    border: 3px solid #00e0ff;
+    box-shadow: 0 0 10px rgba(0, 224, 255, 0.4);
+}
+.timeline-item.future .timeline-content {
+    border-color: rgba(0, 224, 255, 0.3);
+    opacity: 0.7;
+}
+
+/* ======== RWD DLA WIĘKSZYCH EKRANÓW (Naprzemienny układ) ======== */
+@media (min-width: 768px) {
+    .timeline::before {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .timeline-item {
+        width: 50%;
+        padding-left: 0;
+        padding-right: 45px;
+    }
+
+    /* Co drugi element przerzucany na prawą stronę */
+    .timeline-item:nth-child(even) {
+        left: 50%;
+        padding-left: 45px;
+        padding-right: 0;
+    }
+
+    /* Przesunięcie kropki na odpowiednie miejsce na osi */
+    .timeline-dot {
+        left: calc(100% - 10px);
+    }
+    
+    .timeline-item:nth-child(even) .timeline-dot {
+        left: -10px;
+    }
+}
