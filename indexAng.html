@@ -8,18 +8,255 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+    
+    <!-- =========================
+         ADDITIONAL STYLES FOR HORIZONTAL CAREER PATH
+    ========================= -->
+    <style>
+        .horizontal-scroll-wrapper {
+            display: flex;
+            gap: 2.5rem;
+            overflow-x: auto;
+            padding: 3rem 2rem 4rem 2rem; /* More space for shadows */
+            scroll-snap-type: x mandatory;
+            scrollbar-width: thin;
+            scrollbar-color: #00e0ff rgba(255, 255, 255, 0.02);
+            cursor: grab;
+            scroll-behavior: smooth;
+            align-items: stretch; /* Aligns height of all cards */
+            /* Subtle fading on the sides for larger screens */
+            -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+        }
+        
+        .horizontal-scroll-wrapper:active {
+            cursor: grabbing;
+        }
+
+        /* Scrollbar styling */
+        .horizontal-scroll-wrapper::-webkit-scrollbar {
+            height: 6px;
+        }
+        .horizontal-scroll-wrapper::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin: 0 2rem;
+        }
+        .horizontal-scroll-wrapper::-webkit-scrollbar-thumb {
+            background: #00e0ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.8);
+        }
+
+        /* MAIN CARD LOOK */
+        .h-card {
+            min-width: 360px;
+            max-width: 360px;
+            scroll-snap-align: center;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            flex-shrink: 0;
+            user-select: none;
+            
+            /* Glassmorphism & Styling */
+            background: linear-gradient(145deg, rgba(25, 25, 30, 0.6) 0%, rgba(10, 10, 12, 0.8) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 3px solid #00e0ff; /* Standout top */
+            border-radius: 16px;
+            padding: 2.5rem 2rem 2rem 2rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .h-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 224, 255, 0.15);
+            border-color: rgba(0, 224, 255, 0.3);
+            border-top-color: #00e0ff;
+        }
+
+        /* Glowing timeline point at the top of each card */
+        .h-card::before {
+            content: '';
+            position: absolute;
+            top: -7px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: #00e0ff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00e0ff, 0 0 20px #00e0ff;
+            z-index: 2;
+        }
+
+        /* CARD HEADER (Centered) */
+        .h-card-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .h-card-header .date-badge {
+            display: inline-block;
+            background: rgba(0, 224, 255, 0.1);
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            color: #00e0ff;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.1);
+        }
+
+        .h-card-header h3 {
+            font-size: 1.4rem;
+            color: #ffffff;
+            margin: 0 0 0.4rem 0;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .h-card-header h4 {
+            font-size: 1rem;
+            color: #00e0ff; /* Light blue accent for position */
+            margin: 0;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* CARD BODY (Tasks / Description) */
+        .h-card-body {
+            flex-grow: 1; /* Fills remaining space to keep card heights equal */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .h-card-body p {
+            font-size: 0.95rem;
+            color: #b3b3b3;
+            line-height: 1.6;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        /* Task/duty list */
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .task-list li {
+            font-size: 0.9rem;
+            color: #cccccc;
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 24px;
+            line-height: 1.5;
+        }
+        .task-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            top: -1px;
+            color: #00e0ff;
+            font-size: 1.2rem;
+            text-shadow: 0 0 8px rgba(0, 224, 255, 0.6);
+        }
+
+        /* Certificate tags */
+        .cert-section {
+            margin-top: auto; /* Always pushes to the bottom */
+            padding-top: 1rem;
+        }
+        .cert-title {
+            display: block;
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .cert-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .cert-tag {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #eaeaea;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        .cert-tag:hover {
+            border-color: #00e0ff;
+            color: #fff;
+            background: rgba(0, 224, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Future Card */
+        .h-card.future {
+            background: transparent;
+            border: 2px dashed rgba(0, 224, 255, 0.3);
+            border-top: 2px dashed rgba(0, 224, 255, 0.3);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .h-card.future::before {
+            background: transparent;
+            border: 2px solid #00e0ff;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.5);
+            animation: pulse-dot 2s infinite;
+        }
+        .h-card.future:hover {
+            border-color: rgba(0, 224, 255, 0.6);
+            background: rgba(0, 224, 255, 0.02);
+        }
+
+        @keyframes pulse-dot {
+            0% { box-shadow: 0 0 0 0 rgba(0, 224, 255, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 224, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 224, 255, 0); }
+        }
+
+        @media (max-width: 768px) {
+            .horizontal-scroll-wrapper {
+                padding: 2rem 1rem 3rem 1rem;
+                -webkit-mask-image: none;
+                mask-image: none;
+            }
+            .h-card {
+                min-width: 320px;
+                max-width: 320px;
+                padding: 2rem 1.5rem 1.5rem 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="loader-wrapper">
         <div class="loader"></div>
     </div>
+    
     <header class="hero">
         <nav class="nav">
             <h1 class="logo" data-text="Patryk Kamiński"><span>P</span>atryk <span>K</span>amiński</h1>
             <ul>
-                <li><a href="#about">About Me</a></li>
+                <li><a href="#about">About me</a></li>
                 <li><a href="#skills">Skills</a></li>
-                <li><a href="#certificates">Certificates</a></li>
+                <li><a href="#career">Career</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -31,23 +268,23 @@
 
         <div class="hero-content">
             <h2>
-                Hi, I am an <span>IT Specialist</span>
+                Hi, I'm an <span>IT Specialist</span>
             </h2>
 
             <p>
                 I create modern websites, applications, and IT solutions
             </p>
 
-            <a href="#projects" class="btn">
+            <button id="open-projects-modal" class="btn">
                 View Projects
-            </a>
+            </button>
         </div>
     </header>
 
     <section id="about" class="section glass">
-        <h2>About Me</h2>
+        <h2>About me</h2>
         <p>
-            I am passionate about IT, programming, and modern network technologies. I am fascinated by both creating innovative software solutions and analyzing new technology trends. I enjoy designing applications and systems that combine aesthetics with functionality, ensuring intuitiveness and user convenience. I find satisfaction in solving complex technical problems, continuously expanding my knowledge, and applying it in practice to create solutions that are both efficient and modern.
+            I am passionate about computer science, programming, and modern network technologies. I am fascinated by both creating innovative software solutions and analyzing new technology trends. I like to design applications and systems that combine aesthetics and functionality, ensuring intuitiveness and user comfort. I derive satisfaction from solving complex technical problems, continuously expanding my knowledge, and applying it in practice, creating solutions that are both effective and modern.
         </p>
     </section>
 
@@ -64,29 +301,98 @@
         </div>
     </section>
 
-    <section id="certificates" class="section glass">
-        <h2>Certificates</h2>
-        <div class="accomplishment-grid">
-            <div class="card">
-                <h3>IT Technician Title</h3>
-                <p>Specialist in hardware configuration, system and network administration, computer service, as well as website and database creation.</p>
+    <!-- =========================
+         CAREER PATH (HORIZONTAL)
+    ========================= -->
+    <section id="career" class="section glass" style="padding-left: 0; padding-right: 0; max-width: 100%;">
+        <h2 style="padding-left: 2rem;">Career Path</h2>
+        <p style="padding-left: 2rem; color: #a0a0a0; margin-bottom: 0; font-size: 0.9rem;">Swipe right to see more ➔</p>
+        
+        <div class="horizontal-scroll-wrapper" id="draggable-slider">
+            
+            <!-- Education -->
+            <div class="h-card card">
+                <div class="h-card-header">
+                    <span class="date-badge">Education</span>
+                    <h3>ZST No. 1 in Jasło</h3>
+                    <h4>Profile: IT Specialist</h4>
+                </div>
+                <div class="h-card-body">
+                    <p>Developing a passion for IT, building programming and networking foundations, supported by certified professional achievements.</p>
+                    
+                    <div class="cert-section">
+                        <span class="cert-title">Earned Certificates</span>
+                        <div class="cert-tags">
+                            <span class="cert-tag">IT Technician</span>
+                            <span class="cert-tag">INF.02 and INF.03</span>
+                            <span class="cert-tag">Fiber Optic Splicing</span>
+                            <span class="cert-tag">CS M1 JAVA (100%)</span>
+                            <span class="cert-tag">Web Developer</span>
+                            <span class="cert-tag">Cisco CyberSecurity</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <h3>Fiber Optic Splicing</h3>
-                <p>Fiber optic welding certificate, covering the joining of glass fibers, the construction of fiber optic networks, and the operation of fiber optic welding machines.</p>
+
+            <!-- Internship: Service Technician -->
+            <div class="h-card card">
+                <div class="h-card-header">
+                    <span class="date-badge">2023 | Internship (1 mo.)</span>
+                    <h3>PETROSOFT SP. Z O.O.</h3>
+                    <h4>Position: Service Technician</h4>
+                </div>
+                <div class="h-card-body">
+                    <ul class="task-list">
+                        <li>Maintenance of computer and peripheral equipment within the company</li>
+                        <li>Ensuring the proper operation of the system and network infrastructure</li>
+                        <li>Modernization and optimization of office workstations</li>
+                        <li>Efficient hardware troubleshooting in crisis situations</li>
+                    </ul>
+                </div>
             </div>
-            <div class="card">
-                <h3>CS M1 Programming (JAVA)</h3>
-                <p>Programming in JAVA. Service certified by the ECCC exam in advanced level programming. Completed with a score of 100%.</p>
+
+            <!-- Internship: Programmer -->
+            <div class="h-card card">
+                <div class="h-card-header">
+                    <span class="date-badge">2024 | Internship (1 mo.)</span>
+                    <h3>PETROSOFT SP. Z O.O.</h3>
+                    <h4>Position: Programmer</h4>
+                </div>
+                <div class="h-card-body">
+                    <ul class="task-list">
+                        <li>Developing mobile app functionalities for various operating systems</li>
+                        <li>Co-creating reusable component libraries</li>
+                        <li>Implementing data processing algorithms and user interfaces</li>
+                        <li>Creating technical documentation and ensuring code quality</li>
+                        <li>Coordinating meetings with clients and project teams</li>
+                    </ul>
+                </div>
             </div>
-            <div class="card">
-                <h3>Web Developer</h3>
-                <p>Certificate in creating websites and web applications.</p>
+
+            <!-- Work: Web Developer -->
+            <div class="h-card card">
+                <div class="h-card-header">
+                    <span class="date-badge">Work (5 mos.)</span>
+                    <h3>InnWeb Jasło</h3>
+                    <h4>Position: Web Developer</h4>
+                </div>
+                <div class="h-card-body">
+                    <ul class="task-list">
+                        <li>Creating and expanding responsive websites in WordPress</li>
+                        <li>Working on advanced holding-level e-commerce websites</li>
+                        <li>Building stores based on MVC (Model-View-Controller) architecture</li>
+                        <li>Programming using PHP frameworks: CodeIgniter 3 and 4</li>
+                        <li>Implementing and supporting a proprietary CMS model for agency clients</li>
+                    </ul>
+                </div>
             </div>
-            <div class="card">
-                <h3>Cisco Introduction to Cybersecurity</h3>
-                <p>European Certificate in the fundamentals of Cybersecurity.</p>
+
+            <!-- Future -->
+            <div class="h-card card future">
+                <h3 style="color: #fff; font-size: 1.4rem; margin-bottom: 10px;">My next steps...</h3>
+                <p style="font-size: 0.95rem; color: #a0a0a0; margin: 0;">I am open to new challenges, innovative IT projects, and further skills development in my future career.</p>
             </div>
+
         </div>
     </section>
 
@@ -99,21 +405,21 @@
             </div>
             <div class="card">
                 <h3>Portfolio</h3>
-                <p>A website about my achievements, showcasing my skills in web design.</p>
+                <p>A website showcasing my achievements and web design skills.</p>
             </div>
             <div class="card">
                 <h3>Unity</h3>
-                <p>A game created from scratch using the Unity engine.</p>
+                <p>A game built from scratch using Unity.</p>
             </div>
         </div>
     </section>
 
     <section id="contact" class="section">
         <h2>Contact</h2>
-        <p><img src="icons/email.svg" alt="Email"> <strong> <a href="mailto:p.k03@wp.pl"> p.k03@wp.pl </a></strong></p>
+        <p><img src="icons/email.svg" alt="Email"> <strong><a href="mailto:p.k03@wp.pl"> p.k03@wp.pl </a></strong></p>
         
         <div class="socials">
-            <a href="cvAng.html" target="_blank" class="social cv">
+            <a href="cv.html" target="_blank" class="social cv">
                 <img src="icons/cv.png" alt="CV">
             </a>
             <a href="https://github.com/Patryk-Kaminski" target="_blank" class="social github">
@@ -131,9 +437,56 @@
     <footer>
         <p>&copy; 2026 Patryk Kamiński</p>
     </footer>
+
+    <!-- =========================
+         ANIMATED PROJECTS MODAL
+    ========================= -->
+    <div id="projects-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-container">
+            <button class="modal-close" id="close-modal" aria-label="Close modal">&times;</button>
+            <div class="modal-header">
+                <h2>Selected <span>Projects</span></h2>
+                <p>Here is a detailed overview of my work and applications</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-projects-grid">
+                    <div class="modal-project-card">
+                        <span class="project-badge">Web App</span>
+                        <h3>Login System & Database</h3>
+                        <p>A comprehensive web application featuring secure user authentication, session management, and an admin panel.</p>
+                        <div class="project-tech">
+                            <span>PHP</span><span>SQL</span><span>HTML5</span><span>CSS3</span><span>JS</span>
+                        </div>
+                        <a href="app.html" class="modal-btn-link">Open login panel &rarr;</a>
+                    </div>
+
+                    <div class="modal-project-card">
+                        <span class="project-badge">Front-End</span>
+                        <h3>Interactive IT Portfolio</h3>
+                        <p>Note: This site contains various animations showcasing the potential of using SVG with JS and CSS.</p>
+                        <div class="project-tech">
+                            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+                        </div>
+                        <a href="portfolio.html" target="_blank" class="modal-btn-link">View animated portfolio &rarr;</a>
+                    </div>
+
+                    <div class="modal-project-card">
+                        <span class="project-badge">Game Dev</span>
+                        <h3>2D/3D Game in Unity</h3>
+                        <p>A game project created from scratch in the Unity engine, using custom C# scripts and refined physics.</p>
+                        <div class="project-tech">
+                            <span>Unity</span><span>C#</span><span>Game Design</span>
+                        </div>
+                        <a href="https://github.com/Patryk-Kaminski" target="_blank" class="modal-btn-link">View code / demo &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         /* =========================
-         SCROLL REVEAL
+          SCROLL REVEAL
         ========================= */
         const reveals = document.querySelectorAll('.section, .skill, .card, .hero-content');
 
@@ -144,7 +497,6 @@
 
         function revealOnScroll() {
             const windowHeight = window.innerHeight;
-        
             reveals.forEach(el => {
                 const elementTop = el.getBoundingClientRect().top;
                 if (elementTop < windowHeight - 100) {
@@ -156,9 +508,8 @@
         window.addEventListener('scroll', revealOnScroll);
         revealOnScroll();
 
-
         /* =========================
-         PARALLAX HERO
+          PARALLAX 
         ========================= */
         window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero-content');
@@ -166,29 +517,25 @@
             hero.style.transform = `translateY(${scrollY * 0.15}px)`;
         });
 
-
         /* =========================
-         HOLOGRAM TYPEWRITER
+          HOLOGRAM TYPEWRITER
         ========================= */
         const textElement = document.querySelector('.hero-content h2 span');
-        const words = ["It Specialist", "Web designer"];
+        const words = ["IT Specialist", "Web Designer"];
         let wordIndex = 0, charIndex = 0, isDeleting = false;
 
-        // Kursor
         const cursor = document.createElement("span");
         cursor.textContent = "|";
         cursor.style.marginLeft = "6px";
         cursor.style.animation = "blink 1.2s infinite";
         textElement.after(cursor);
 
-        // CSS animacji kursora i hologram
         const style = document.createElement("style");
         style.innerHTML = `
             @keyframes blink {
                 0%, 45%, 100% { opacity: 1; }
                 50%, 95% { opacity: 0; }
             }
-
             .hologram {
                 position: relative;
                 text-shadow:
@@ -197,7 +544,6 @@
                 animation: holoFloat 3s ease-in-out infinite,
                            holoFlicker 2.5s infinite;
             }
-
             .hologram::after {
                 content: attr(data-text);
                 position: absolute;
@@ -207,12 +553,10 @@
                 filter: blur(1px);
                 color: #00e0ff;
             }
-
             @keyframes holoFloat {
                 0%, 100% { transform: translateY(0); }
                 50% { transform: translateY(-2px); }
             }
-
             @keyframes holoFlicker {
                 0%, 100% { opacity: 1; }
                 50% { opacity: 0.85; }
@@ -224,7 +568,6 @@
 
         function typeEffect() {
             const currentWord = words[wordIndex];
-        
             if (!isDeleting) charIndex += 0.5;
             else charIndex -= 0.5;
         
@@ -238,21 +581,17 @@
                 speed = 1500;
                 isDeleting = true;
             }
-        
             if (isDeleting && Math.floor(charIndex) === 0) {
                 isDeleting = false;
                 wordIndex = (wordIndex + 1) % words.length;
                 speed = 500;
             }
-        
             setTimeout(typeEffect, speed);
         }
-
         typeEffect();
 
-
         /* =========================
-         CARDS 3D TILT + GLASS LIGHT
+          CARDS 3D TILT
         ========================= */
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('mousemove', e => {
@@ -278,9 +617,8 @@
             });
         });
 
-
         /* =========================
-            PŁYNNE ŚWIATŁO ZA KURSOREM
+            SMOOTH LIGHT BEHIND CURSOR
         ========================= */
         const light = document.createElement('div');
         light.style.position = 'fixed';
@@ -307,14 +645,12 @@
             light.style.transform = `translate(${currentX - 160}px, ${currentY - 160}px)`;
             requestAnimationFrame(animateLight);
         }
-
         animateLight();
 
- /* =========================
-           SCANLINE / HOLOGRAM NAGŁÓWKI
+        /* =========================
+            SCANLINE / HOLOGRAM HEADERS
         ========================= */
         const headers = document.querySelectorAll('.section h2');
-
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -322,39 +658,100 @@
                 }
             });
         }, { threshold: 0.6 });
-
         headers.forEach(h => observer.observe(h));
 
         const magneticButtons = document.querySelectorAll('.btn, .social');
+        magneticButtons.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const position = btn.getBoundingClientRect();
+                const x = e.clientX - position.left - position.width / 2;
+                const y = e.clientY - position.top - position.height / 2;
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0px, 0px)';
+                setTimeout(() => { btn.style.transform = ''; }, 300); 
+            });
+        });
 
-magneticButtons.forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-        const position = btn.getBoundingClientRect();
-        const x = e.clientX - position.left - position.width / 2;
-        const y = e.clientY - position.top - position.height / 2;
+        window.addEventListener("load", () => {
+            const loader = document.querySelector(".loader-wrapper");
+            loader.classList.add("loader-hidden");
+            loader.addEventListener("transitionend", () => {
+                loader.remove();
+            });
+        });
 
-        // Przesuń przycisk w stronę kursora (siła 0.3)
-        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-    });
+        /* =========================
+            PROJECTS MODAL LOGIC
+        ========================= */
+        const modal = document.getElementById('projects-modal');
+        const openModalBtn = document.getElementById('open-projects-modal');
+        const closeModalBtn = document.getElementById('close-modal');
 
-    btn.addEventListener('mouseleave', () => {
-        // Wróć na miejsce po zabraniu myszki
-        btn.style.transform = 'translate(0px, 0px)';
-        // Resetuj transformacje z innych efektów (np. hover scale) po chwili
-        setTimeout(() => { btn.style.transform = ''; }, 300); 
-    });
-});
-window.addEventListener("load", () => {
-    const loader = document.querySelector(".loader-wrapper");
-    loader.classList.add("loader-hidden");
-    
-    // Usuń element z DOM po zakończeniu animacji, żeby nie blokował kliknięć
-    loader.addEventListener("transitionend", () => {
-        loader.remove();
-    });
-});
-</script>
+        function openModal(e) {
+            if (e) e.preventDefault();
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden'; 
+        }
 
+        function closeModal() {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = ''; 
+        }
 
+        if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+        if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        /* =========================
+            SCRIPT: MOUSE DRAGS CAREER AXIS (DRAG TO SCROLL)
+        ========================= */
+        const slider = document.getElementById('draggable-slider');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.style.cursor = 'grabbing';
+            slider.style.scrollSnapType = 'none'; // Disable snap while dragging
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+            slider.style.scrollSnapType = 'x mandatory'; // Restore snap
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+            slider.style.scrollSnapType = 'x mandatory'; // Restore snap
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 1.5; // Scroll speed
+            slider.scrollLeft = scrollLeft - walk;
+        });
+    </script>
 </body>
 </html>
